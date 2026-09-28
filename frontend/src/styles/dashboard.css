@@ -519,3 +519,101 @@
   background: #ecfdf5;
   color: #059669;
 }
+.dashboard-widgets {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 18px;
+}
+
+.project-list,
+.goal-list {
+  display: grid;
+  gap: 6px;
+}
+
+.project-row {
+  display: grid;
+  grid-template-columns: 38px 1fr 130px 18px;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.project-row:last-child {
+  border-bottom: 0;
+}
+
+.project-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.project-info strong {
+  display: block;
+  color: #172033;
+  font-size: 12px;
+}
+
+.project-info span {
+  display: block;
+  margin-top: 3px;
+  color: #9ca3af;
+  font-size: 10px;
+}
+
+.project-progress {
+  display: grid;
+  grid-template-columns: 1fr 30px;
+  gap: 8px;
+  align-items: center;
+}
+
+.project-progress .progress-track {
+  margin-top: 0;
+  height: 6px;
+}
+
+.project-progress > span {
+  color: #6b7280;
+  font-size: 10px;
+  text-align: right;
+}
+
+.row-arrow {
+  color: #9ca3af;
+}
+
+.goal-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+}
+
+.goal-item:last-child {
+  border-bottom: 0;
+}
+
+.goal-item svg {
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.goal-item.completed {
+  color: #64748b;
+  text-decoration: line-through;
+}
+
+.goal-item.completed svg {
+  color: #16a34a;
+}
