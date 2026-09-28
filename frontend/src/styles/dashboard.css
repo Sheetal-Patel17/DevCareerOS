@@ -458,3 +458,64 @@
   background: #ecfdf5;
   color: #059669;
 }
+.applications-panel {
+  margin-bottom: 22px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.application-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.application-table th {
+  padding: 10px 8px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #9ca3af;
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.application-table td {
+  padding: 14px 8px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+}
+
+.application-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.application-table td:first-child {
+  color: #172033;
+  font-weight: 700;
+}
+
+.status-badge {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.status-applied {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.status-interview {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+.status-shortlisted {
+  background: #ecfdf5;
+  color: #059669;
+}
