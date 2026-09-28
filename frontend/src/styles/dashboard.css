@@ -217,3 +217,50 @@
 .mobile-menu-button {
   display: none;
 }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.stat-card {
+  padding: 19px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stat-icon {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.stat-card strong {
+  display: block;
+  margin-top: 17px;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+}
+
+.stat-card p {
+  margin: 5px 0 0;
+  color: #16a34a;
+  font-size: 11px;
+  font-weight: 600;
+}
