@@ -1,0 +1,31 @@
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f6fb;
+}
+
+.main-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.dashboard-content {
+  padding: 28px 32px 40px;
+}
+
+.page-heading {
+  margin-bottom: 24px;
+}
+
+.page-heading h1 {
+  margin: 0 0 6px;
+  font-size: 30px;
+  line-height: 1.2;
+  color: #172033;
+}
+
+.page-heading p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 15px;
+}
