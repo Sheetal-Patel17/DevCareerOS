@@ -617,3 +617,93 @@
 .goal-item.completed svg {
   color: #16a34a;
 }
+@media (max-width: 1150px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .progress-grid,
+  .dashboard-widgets {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    width: 235px;
+  }
+}
+
+@media (max-width: 800px) {
+  .app-shell {
+    display: block;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: grid;
+  }
+
+  .topbar {
+    height: auto;
+    min-height: 68px;
+    padding: 14px 18px;
+  }
+
+  .search-box {
+    width: min(360px, calc(100vw - 160px));
+  }
+
+  .dashboard-content {
+    padding: 22px 18px 30px;
+  }
+
+  .page-heading h1 {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 560px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    gap: 10px;
+  }
+
+  .topbar-left {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .topbar-actions {
+    display: none;
+  }
+
+  .dashboard-content {
+    padding: 18px 14px 24px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  .project-row {
+    grid-template-columns: 34px 1fr;
+  }
+
+  .project-progress,
+  .row-arrow {
+    grid-column: 2;
+  }
+
+  .application-table {
+    min-width: 620px;
+  }
+}
