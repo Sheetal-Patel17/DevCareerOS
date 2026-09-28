@@ -11,15 +11,16 @@ import {
   Trophy,
   UserRound,
 } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 const navigationItems = [
-  { label: "Dashboard", icon: LayoutDashboard, active: true },
-  { label: "Applications", icon: BriefcaseBusiness },
-  { label: "Skills", icon: GraduationCap },
-  { label: "Projects", icon: FolderKanban },
-  { label: "DSA Progress", icon: Trophy },
-  { label: "Interviews", icon: MessageSquareText },
-  { label: "Goals", icon: Target },
+  { label: "Dashboard", icon: LayoutDashboard, path: "/" },
+  { label: "Applications", icon: BriefcaseBusiness, path: "/applications" },
+  { label: "Skills", icon: GraduationCap, path: "#" },
+  { label: "Projects", icon: FolderKanban, path: "#" },
+  { label: "DSA Progress", icon: Trophy, path: "#" },
+  { label: "Interviews", icon: MessageSquareText, path: "#" },
+  { label: "Goals", icon: Target, path: "#" },
 ];
 
 function Sidebar() {
@@ -42,15 +43,26 @@ function Sidebar() {
         {navigationItems.map((item) => {
           const Icon = item.icon;
 
+          if (item.path === "#") {
+            return (
+              <button type="button" className="nav-item" key={item.label}>
+                <Icon size={18} />
+                <span>{item.label}</span>
+              </button>
+            );
+          }
+
           return (
-            <button
-              type="button"
-              className={`nav-item ${item.active ? "active" : ""}`}
+            <NavLink
+              to={item.path}
+              className={({ isActive }) =>
+                `nav-item ${isActive ? "active" : ""}`
+              }
               key={item.label}
             >
               <Icon size={18} />
               <span>{item.label}</span>
-            </button>
+            </NavLink>
           );
         })}
       </nav>
