@@ -375,3 +375,79 @@
   gap: 8px;
   margin-top: 18px;
 }
+@media (max-width: 1000px) {
+  .application-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .application-card {
+    grid-template-columns: 38px 1fr;
+  }
+
+  .application-actions {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .applications-header {
+    flex-direction: column;
+  }
+
+  .add-application-button {
+    width: 100%;
+  }
+
+  .application-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .application-search {
+    width: 100%;
+  }
+
+  .application-status-filter {
+    width: 100%;
+  }
+
+  .application-status-filter select {
+    width: 100%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .application-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .applications-list {
+    padding: 14px;
+  }
+
+  .application-card {
+    padding: 13px;
+  }
+
+  .application-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .application-actions {
+    width: 100%;
+  }
+
+  .application-actions button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .application-modal {
+    padding: 17px;
+  }
+}
