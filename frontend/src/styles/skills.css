@@ -383,3 +383,66 @@
   background: #ffffff;
   color: #475569;
 }
+@media (max-width: 1100px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .skill-filters {
+    grid-template-columns: 1fr 170px 170px;
+  }
+
+  .skill-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 750px) {
+  .skills-header {
+    flex-direction: column;
+  }
+
+  .skills-header > .primary-button {
+    width: 100%;
+  }
+
+  .skill-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-search,
+  .skill-filter {
+    width: 100%;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .skill-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .skills-panel {
+    padding: 14px;
+  }
+
+  .skill-card {
+    padding: 14px;
+  }
+
+  .skill-target {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .skill-modal {
+    padding: 17px;
+  }
+
+  .skill-modal .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
