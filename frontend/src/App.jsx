@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Applications from "./pages/Applications";
 import Login from "./pages/Login";
+import Projects from "./pages/Projects";
 import Register from "./pages/Register";
 import Skills from "./pages/Skills";
 import "./index.css";
@@ -44,6 +45,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Skills />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/projects"
+          element={
+            <ProtectedRoute>
+              <Projects />
             </ProtectedRoute>
           }
         />

@@ -3,17 +3,17 @@ import { ArrowUpRight, CheckCircle2, Clock3, FolderGit2 } from "lucide-react";
 const projects = [
   {
     name: "DevCareerOS",
-    stack: "React · Node · MongoDB",
+    stack: "React | Node | MongoDB",
     progress: 35,
   },
   {
     name: "DermaVision AI",
-    stack: "Python · YOLO · Streamlit",
+    stack: "Python | YOLO | Streamlit",
     progress: 100,
   },
   {
     name: "LuxeBite",
-    stack: "React · Express · MongoDB",
+    stack: "React | Express | MongoDB",
     progress: 72,
   },
 ];
@@ -24,7 +24,7 @@ function ProjectList() {
       <div className="panel-heading">
         <div>
           <h2>Recent Projects</h2>
-          <p>Projects you're actively building.</p>
+          <p>Projects you are actively building.</p>
         </div>
 
         <button type="button" className="text-button">
@@ -51,6 +51,7 @@ function ProjectList() {
                   style={{ width: `${project.progress}%` }}
                 />
               </div>
+
               <span>{project.progress}%</span>
             </div>
 
@@ -68,7 +69,7 @@ function GoalCard() {
       <div className="panel-heading">
         <div>
           <h2>Career Goals</h2>
-          <p>Stay focused on the next milestones.</p>
+          <p>Stay focused on your next milestones.</p>
         </div>
       </div>
 
