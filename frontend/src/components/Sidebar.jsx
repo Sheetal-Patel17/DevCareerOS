@@ -17,7 +17,7 @@ const navigationItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/" },
   { label: "Applications", icon: BriefcaseBusiness, path: "/applications" },
   { label: "Skills", icon: GraduationCap, path: "/skills" },
-  { label: "Projects", icon: FolderKanban, path: "#" },
+  { label: "Projects", icon: FolderKanban, path: "/projects" },
   { label: "DSA Progress", icon: Trophy, path: "#" },
   { label: "Interviews", icon: MessageSquareText, path: "#" },
   { label: "Goals", icon: Target, path: "#" },
