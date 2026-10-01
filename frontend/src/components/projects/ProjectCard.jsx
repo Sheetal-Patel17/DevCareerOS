@@ -1,6 +1,6 @@
 import {
   ExternalLink,
-  Github,
+  GitBranch,
   Pencil,
   Trash2,
 } from "lucide-react";
@@ -11,7 +11,7 @@ function ProjectCard({ project, onEdit, onDelete }) {
     <article className="project-card">
       <div className="project-card-header">
         <div className="project-card-icon">
-          <Github size={19} />
+          <GitBranch size={19} />
         </div>
 
         <span
@@ -50,12 +50,12 @@ function ProjectCard({ project, onEdit, onDelete }) {
             target="_blank"
             rel="noreferrer"
           >
-            <Github size={14} />
+            <GitBranch size={14} />
             GitHub
           </a>
         ) : (
           <span className="disabled-link">
-            <Github size={14} />
+            <GitBranch size={14} />
             GitHub
           </span>
         )}
