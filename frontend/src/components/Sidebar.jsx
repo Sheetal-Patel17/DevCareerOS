@@ -16,7 +16,7 @@ import { NavLink } from "react-router-dom";
 const navigationItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/" },
   { label: "Applications", icon: BriefcaseBusiness, path: "/applications" },
-  { label: "Skills", icon: GraduationCap, path: "#" },
+  { label: "Skills", icon: GraduationCap, path: "/skills" },
   { label: "Projects", icon: FolderKanban, path: "#" },
   { label: "DSA Progress", icon: Trophy, path: "#" },
   { label: "Interviews", icon: MessageSquareText, path: "#" },
