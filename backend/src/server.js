@@ -6,6 +6,7 @@ const connectDatabase = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const dsaRoutes = require("./routes/dsaRoutes");
+const interviewRoutes = require("./routes/interviewRoutes");
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.get("/api/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/dsa", dsaRoutes);
+app.use("/api/interviews", interviewRoutes);
 
 async function startServer() {
   try {
