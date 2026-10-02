@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import "../styles/interviews.css";
 import {
@@ -33,13 +34,24 @@ const formatDateTimeForInput = (dateValue) => {
 
   const pad = (value) => String(value).padStart(2, "0");
 
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
-    date.getDate()
-  )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-};
+  const datePart = [
+    date.getFullYear(),
+    pad(date.getMonth() + 1),
+    pad(date.getDate()),
+  ].join("-");
 
+  const timePart = [
+    pad(date.getHours()),
+    pad(date.getMinutes()),
+  ].join(":");
+
+  return datePart + "T" + timePart;
+};
 function Interviews() {
   const [interviews, setInterviews] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
 
   const [stats, setStats] = useState({
     total: 0,
@@ -172,6 +184,21 @@ function Interviews() {
     }
   };
 
+  const filteredInterviews = interviews.filter((interview) => {
+    const search = searchTerm.toLowerCase().trim();
+
+    const matchesSearch =
+      !search ||
+      interview.company?.toLowerCase().includes(search) ||
+      interview.role?.toLowerCase().includes(search) ||
+      interview.round?.toLowerCase().includes(search);
+
+    const matchesStatus =
+      statusFilter === "All" || interview.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
+
   return (
     <div className="interviews-page">
       <div className="page-header">
@@ -287,7 +314,9 @@ function Interviews() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="interviewDate">Interview Date & Time</label>
+              <label htmlFor="interviewDate">
+                Interview Date &amp; Time
+              </label>
 
               <input
                 id="interviewDate"
@@ -404,46 +433,83 @@ function Interviews() {
       )}
 
       {!loading && interviews.length > 0 && (
-        <div className="interviews-list">
-          {interviews.map((interview) => (
-            <div className="interview-card" key={interview._id}>
-              <div>
-                <h2>{interview.company}</h2>
-                <p>{interview.role}</p>
+        <>
+          <div className="interview-filters">
+            <input
+              type="text"
+              placeholder="Search company, role, or round..."
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+            />
 
-                <small>
-                  {new Date(interview.interviewDate).toLocaleString()}
-                </small>
-              </div>
+            <select
+              value={statusFilter}
+              onChange={(event) => setStatusFilter(event.target.value)}
+            >
+              <option value="All">All Statuses</option>
+              <option value="Scheduled">Scheduled</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Selected">Selected</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
 
-              <div className="interview-card-meta">
-                <strong>{interview.round}</strong>
+          {filteredInterviews.length > 0 ? (
+            <div className="interviews-list">
+              {filteredInterviews.map((interview) => (
+                <div className="interview-card" key={interview._id}>
+                  <div>
+                    <h2>{interview.company}</h2>
 
-                <span>{interview.type}</span>
+                    <p>{interview.role}</p>
 
-                <span>{interview.status}</span>
+                    <small>
+                      {new Date(
+                        interview.interviewDate
+                      ).toLocaleString()}
+                    </small>
+                  </div>
 
-                <div className="interview-actions">
-                  <button
-                    type="button"
-                    className="secondary-button"
-                    onClick={() => openEditForm(interview)}
-                  >
-                    Edit
-                  </button>
+                  <div className="interview-card-meta">
+                    <strong>{interview.round}</strong>
 
-                  <button
-                    type="button"
-                    className="secondary-button"
-                    onClick={() => handleDelete(interview._id)}
-                  >
-                    Delete
-                  </button>
+                    <span>{interview.type}</span>
+
+                    <span>{interview.status}</span>
+
+                    <div className="interview-actions">
+                      <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={() => openEditForm(interview)}
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={() => handleDelete(interview._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          ) : (
+            <div className="interviews-empty-state">
+              <h2>No matching interviews</h2>
+
+              <p>
+                Try changing your search text or selecting a different
+                status.
+              </p>
+            </div>
+          )}
+        </>
       )}
 
       {loading && (
