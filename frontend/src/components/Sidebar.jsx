@@ -19,7 +19,7 @@ const navigationItems = [
   { label: "Skills", icon: GraduationCap, path: "/skills" },
   { label: "Projects", icon: FolderKanban, path: "/projects" },
   { label: "DSA Progress", icon: Trophy, path: "#" },
-  { label: "Interviews", icon: MessageSquareText, path: "#" },
+  { label: "Interviews", icon: MessageSquareText, path: "/interviews" },
   { label: "Goals", icon: Target, path: "#" },
 ];
 
