@@ -136,3 +136,57 @@
     width: 100%;
   }
 }
+.interview-error {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border: 1px solid #f0b4b4;
+  border-radius: 10px;
+  background: #fff5f5;
+  color: #a33a3a;
+}
+
+.interviews-list {
+  display: grid;
+  gap: 16px;
+}
+
+.interview-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.interview-card h2 {
+  margin: 0 0 6px;
+}
+
+.interview-card p {
+  margin: 0;
+  opacity: 0.7;
+}
+
+.interview-card > div:last-child {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.interview-card > div:last-child span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .interview-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
