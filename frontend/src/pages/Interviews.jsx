@@ -4,6 +4,8 @@ import {
   getInterviews,
   getInterviewStats,
   createInterview,
+  updateInterview,
+  deleteInterview,
 } from "../services/interviewService";
 
 const initialForm = {
@@ -18,8 +20,27 @@ const initialForm = {
   preparation: "",
 };
 
+const formatDateTimeForInput = (dateValue) => {
+  if (!dateValue) {
+    return "";
+  }
+
+  const date = new Date(dateValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  const pad = (value) => String(value).padStart(2, "0");
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+    date.getDate()
+  )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
+
 function Interviews() {
   const [interviews, setInterviews] = useState([]);
+
   const [stats, setStats] = useState({
     total: 0,
     scheduled: 0,
@@ -29,8 +50,11 @@ function Interviews() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(initialForm);
+
+  const [editingId, setEditingId] = useState(null);
   const [saving, setSaving] = useState(false);
 
   const loadInterviewData = async () => {
@@ -72,6 +96,38 @@ function Interviews() {
     }));
   };
 
+  const openAddForm = () => {
+    setEditingId(null);
+    setFormData(initialForm);
+    setShowForm(true);
+    setError("");
+  };
+
+  const openEditForm = (interview) => {
+    setEditingId(interview._id);
+
+    setFormData({
+      company: interview.company || "",
+      role: interview.role || "",
+      round: interview.round || "",
+      type: interview.type || "Technical",
+      status: interview.status || "Scheduled",
+      interviewDate: formatDateTimeForInput(interview.interviewDate),
+      meetingLink: interview.meetingLink || "",
+      notes: interview.notes || "",
+      preparation: interview.preparation || "",
+    });
+
+    setShowForm(true);
+    setError("");
+  };
+
+  const closeForm = () => {
+    setShowForm(false);
+    setEditingId(null);
+    setFormData(initialForm);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -79,17 +135,40 @@ function Interviews() {
       setSaving(true);
       setError("");
 
-      await createInterview(formData);
+      if (editingId) {
+        await updateInterview(editingId, formData);
+      } else {
+        await createInterview(formData);
+      }
 
-      setFormData(initialForm);
-      setShowForm(false);
+      closeForm();
+      await loadInterviewData();
+    } catch (err) {
+      console.error("Save interview error:", err);
+      setError(err.message || "Failed to save interview");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this interview?"
+    );
+
+    if (!shouldDelete) {
+      return;
+    }
+
+    try {
+      setError("");
+
+      await deleteInterview(id);
 
       await loadInterviewData();
     } catch (err) {
-      console.error("Create interview error:", err);
-      setError(err.message || "Failed to create interview");
-    } finally {
-      setSaving(false);
+      console.error("Delete interview error:", err);
+      setError(err.message || "Failed to delete interview");
     }
   };
 
@@ -107,11 +186,8 @@ function Interviews() {
           </p>
         </div>
 
-        <button
-          className="primary-button"
-          onClick={() => setShowForm((previous) => !previous)}
-        >
-          {showForm ? "Close Form" : "+ Add Interview"}
+        <button className="primary-button" onClick={openAddForm}>
+          + Add Interview
         </button>
       </div>
 
@@ -121,14 +197,20 @@ function Interviews() {
         <form className="interview-form" onSubmit={handleSubmit}>
           <div className="form-header">
             <div>
-              <h2>Add Interview</h2>
-              <p>Save a new interview to your career tracker.</p>
+              <h2>{editingId ? "Edit Interview" : "Add Interview"}</h2>
+
+              <p>
+                {editingId
+                  ? "Update your interview details."
+                  : "Save a new interview to your career tracker."}
+              </p>
             </div>
           </div>
 
           <div className="form-grid">
             <div className="form-group">
               <label htmlFor="company">Company</label>
+
               <input
                 id="company"
                 name="company"
@@ -142,6 +224,7 @@ function Interviews() {
 
             <div className="form-group">
               <label htmlFor="role">Role</label>
+
               <input
                 id="role"
                 name="role"
@@ -155,6 +238,7 @@ function Interviews() {
 
             <div className="form-group">
               <label htmlFor="round">Interview Round</label>
+
               <input
                 id="round"
                 name="round"
@@ -168,6 +252,7 @@ function Interviews() {
 
             <div className="form-group">
               <label htmlFor="type">Interview Type</label>
+
               <select
                 id="type"
                 name="type"
@@ -186,6 +271,7 @@ function Interviews() {
 
             <div className="form-group">
               <label htmlFor="status">Status</label>
+
               <select
                 id="status"
                 name="status"
@@ -202,6 +288,7 @@ function Interviews() {
 
             <div className="form-group">
               <label htmlFor="interviewDate">Interview Date & Time</label>
+
               <input
                 id="interviewDate"
                 name="interviewDate"
@@ -214,6 +301,7 @@ function Interviews() {
 
             <div className="form-group full-width">
               <label htmlFor="meetingLink">Meeting Link</label>
+
               <input
                 id="meetingLink"
                 name="meetingLink"
@@ -226,6 +314,7 @@ function Interviews() {
 
             <div className="form-group full-width">
               <label htmlFor="preparation">Preparation</label>
+
               <textarea
                 id="preparation"
                 name="preparation"
@@ -238,6 +327,7 @@ function Interviews() {
 
             <div className="form-group full-width">
               <label htmlFor="notes">Notes</label>
+
               <textarea
                 id="notes"
                 name="notes"
@@ -253,10 +343,7 @@ function Interviews() {
             <button
               type="button"
               className="secondary-button"
-              onClick={() => {
-                setShowForm(false);
-                setFormData(initialForm);
-              }}
+              onClick={closeForm}
               disabled={saving}
             >
               Cancel
@@ -267,7 +354,11 @@ function Interviews() {
               className="primary-button"
               disabled={saving}
             >
-              {saving ? "Saving..." : "Save Interview"}
+              {saving
+                ? "Saving..."
+                : editingId
+                ? "Update Interview"
+                : "Save Interview"}
             </button>
           </div>
         </form>
@@ -306,10 +397,7 @@ function Interviews() {
             schedules, preparation notes, and outcomes.
           </p>
 
-          <button
-            className="secondary-button"
-            onClick={() => setShowForm(true)}
-          >
+          <button className="secondary-button" onClick={openAddForm}>
             Add Your First Interview
           </button>
         </div>
@@ -322,12 +410,36 @@ function Interviews() {
               <div>
                 <h2>{interview.company}</h2>
                 <p>{interview.role}</p>
+
+                <small>
+                  {new Date(interview.interviewDate).toLocaleString()}
+                </small>
               </div>
 
               <div className="interview-card-meta">
                 <strong>{interview.round}</strong>
+
                 <span>{interview.type}</span>
+
                 <span>{interview.status}</span>
+
+                <div className="interview-actions">
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={() => openEditForm(interview)}
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={() => handleDelete(interview._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))}

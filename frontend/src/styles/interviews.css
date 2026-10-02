@@ -286,3 +286,23 @@
     width: 100%;
   }
 }
+.interview-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.interview-card small {
+  display: block;
+  margin-top: 8px;
+  opacity: 0.6;
+}
+
+@media (max-width: 700px) {
+  .interview-actions {
+    width: 100%;
+  }
+
+  .interview-actions button {
+    flex: 1;
+  }
+}

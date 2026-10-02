@@ -37,6 +37,7 @@ export const getInterviewStats = async () => {
 
   return data;
 };
+
 export const createInterview = async (interviewData) => {
   const response = await fetch(`${API_BASE_URL}/interviews`, {
     method: "POST",
@@ -48,6 +49,37 @@ export const createInterview = async (interviewData) => {
 
   if (!response.ok) {
     throw new Error(data.message || "Failed to create interview");
+  }
+
+  return data;
+};
+
+export const updateInterview = async (id, interviewData) => {
+  const response = await fetch(`${API_BASE_URL}/interviews/${id}`, {
+    method: "PUT",
+    headers: getHeaders(),
+    body: JSON.stringify(interviewData),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to update interview");
+  }
+
+  return data;
+};
+
+export const deleteInterview = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/interviews/${id}`, {
+    method: "DELETE",
+    headers: getHeaders(),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to delete interview");
   }
 
   return data;
