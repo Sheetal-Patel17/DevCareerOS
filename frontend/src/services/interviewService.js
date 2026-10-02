@@ -37,3 +37,18 @@ export const getInterviewStats = async () => {
 
   return data;
 };
+export const createInterview = async (interviewData) => {
+  const response = await fetch(`${API_BASE_URL}/interviews`, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify(interviewData),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to create interview");
+  }
+
+  return data;
+};
