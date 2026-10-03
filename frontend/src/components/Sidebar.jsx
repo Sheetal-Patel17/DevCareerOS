@@ -20,7 +20,7 @@ const navigationItems = [
   { label: "Projects", icon: FolderKanban, path: "/projects" },
   { label: "DSA Progress", icon: Trophy, path: "#" },
   { label: "Interviews", icon: MessageSquareText, path: "/interviews" },
-  { label: "Goals", icon: Target, path="/goals" },
+  { label: "Goals", icon: Target, path: "/goals" },
 ];
 
 function Sidebar() {
