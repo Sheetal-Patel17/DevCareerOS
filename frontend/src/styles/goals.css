@@ -406,3 +406,23 @@
     flex: 1;
   }
 }
+.goal-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.goal-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.goal-actions .secondary-button {
+  min-width: 72px;
+}
+
+.goal-progress-fill {
+  min-width: 0;
+}
+
+.goal-stat-card strong {
+  line-height: 1;
+}
