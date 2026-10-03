@@ -42,6 +42,10 @@ const formatDateForInput = (dateValue) => {
 function Goals() {
   const [goals, setGoals] = useState([]);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
+
   const [stats, setStats] = useState({
     total: 0,
     completed: 0,
@@ -107,7 +111,10 @@ function Goals() {
 
   const openAddForm = () => {
     setEditingId(null);
-    setFormData(initialForm);
+    setFormData({
+      ...initialForm,
+      milestones: [],
+    });
     setMilestoneTitle("");
     setShowForm(true);
     setError("");
@@ -122,10 +129,13 @@ function Goals() {
       category: goal.category || "Career",
       priority: goal.priority || "Medium",
       status: goal.status || "Not Started",
-      progress: goal.progress || 0,
+      progress: Number(goal.progress) || 0,
       deadline: formatDateForInput(goal.deadline),
       milestones: Array.isArray(goal.milestones)
-        ? goal.milestones
+        ? goal.milestones.map((milestone) => ({
+            title: milestone.title || "",
+            completed: Boolean(milestone.completed),
+          }))
         : [],
     });
 
@@ -137,7 +147,10 @@ function Goals() {
   const closeForm = () => {
     setShowForm(false);
     setEditingId(null);
-    setFormData(initialForm);
+    setFormData({
+      ...initialForm,
+      milestones: [],
+    });
     setMilestoneTitle("");
   };
 
@@ -153,7 +166,7 @@ function Goals() {
       milestones: [
         ...previous.milestones,
         {
-          title,
+          title: title,
           completed: false,
         },
       ],
@@ -174,13 +187,17 @@ function Goals() {
   const toggleMilestone = (index) => {
     setFormData((previous) => ({
       ...previous,
-      milestones: previous.milestones.map((milestone, milestoneIndex) =>
-        milestoneIndex === index
-          ? {
-              ...milestone,
-              completed: !milestone.completed,
-            }
-          : milestone
+      milestones: previous.milestones.map(
+        (milestone, milestoneIndex) => {
+          if (milestoneIndex !== index) {
+            return milestone;
+          }
+
+          return {
+            ...milestone,
+            completed: !milestone.completed,
+          };
+        }
       ),
     }));
   };
@@ -192,12 +209,20 @@ function Goals() {
       setSaving(true);
       setError("");
 
+      const progress =
+        formData.status === "Completed"
+          ? 100
+          : Number(formData.progress);
+
       const payload = {
-        ...formData,
-        progress:
-          formData.status === "Completed"
-            ? 100
-            : Number(formData.progress),
+        title: formData.title.trim(),
+        description: formData.description.trim(),
+        category: formData.category,
+        priority: formData.priority,
+        status: formData.status,
+        progress: progress,
+        deadline: formData.deadline || null,
+        milestones: formData.milestones,
       };
 
       if (editingId) {
@@ -229,13 +254,38 @@ function Goals() {
       setError("");
 
       await deleteGoal(id);
-
       await loadGoalData();
     } catch (err) {
       console.error("Delete goal error:", err);
       setError(err.message || "Failed to delete goal");
     }
   };
+
+  const filteredGoals = goals.filter((goal) => {
+    const search = searchTerm.toLowerCase().trim();
+
+    const title = (goal.title || "").toLowerCase();
+    const description = (goal.description || "").toLowerCase();
+
+    const matchesSearch =
+      search === "" ||
+      title.includes(search) ||
+      description.includes(search);
+
+    const matchesCategory =
+      categoryFilter === "All" ||
+      goal.category === categoryFilter;
+
+    const matchesStatus =
+      statusFilter === "All" ||
+      goal.status === statusFilter;
+
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesStatus
+    );
+  });
 
   return (
     <div className="goals-page">
@@ -251,41 +301,64 @@ function Goals() {
           </p>
         </div>
 
-        <button className="primary-button" onClick={openAddForm}>
+        <button
+          className="primary-button"
+          onClick={openAddForm}
+        >
           + Add Goal
         </button>
       </div>
 
-      {error && <div className="goal-error">{error}</div>}
+      {error && (
+        <div className="goal-error">
+          {error}
+        </div>
+      )}
 
       <div className="goal-stats-grid">
         <div className="goal-stat-card">
           <span>Total Goals</span>
-          <strong>{loading ? "—" : stats.total}</strong>
+          <strong>
+            {loading ? "â€”" : stats.total}
+          </strong>
         </div>
 
         <div className="goal-stat-card">
           <span>In Progress</span>
-          <strong>{loading ? "—" : stats.inProgress}</strong>
+          <strong>
+            {loading ? "â€”" : stats.inProgress}
+          </strong>
         </div>
 
         <div className="goal-stat-card">
           <span>Completed</span>
-          <strong>{loading ? "—" : stats.completed}</strong>
+          <strong>
+            {loading ? "â€”" : stats.completed}
+          </strong>
         </div>
 
         <div className="goal-stat-card">
           <span>Average Progress</span>
           <strong>
-            {loading ? "—" : stats.averageProgress + "%"}
+            {loading
+              ? "â€”"
+              : stats.averageProgress + "%"}
           </strong>
         </div>
       </div>
 
       {showForm && (
-        <form className="goal-form" onSubmit={handleSubmit}>
+        <form
+          className="goal-form"
+          onSubmit={handleSubmit}
+        >
           <div className="goal-form-header">
-            <h2>{editingId ? "Edit Goal" : "Create Goal"}</h2>
+            <h2>
+              {editingId
+                ? "Edit Goal"
+                : "Create Goal"}
+            </h2>
+
             <p>
               {editingId
                 ? "Update your goal and its milestones."
@@ -295,7 +368,9 @@ function Goals() {
 
           <div className="goal-form-grid">
             <div className="goal-form-group full-width">
-              <label htmlFor="title">Goal Title</label>
+              <label htmlFor="title">
+                Goal Title
+              </label>
 
               <input
                 id="title"
@@ -309,7 +384,9 @@ function Goals() {
             </div>
 
             <div className="goal-form-group full-width">
-              <label htmlFor="description">Description</label>
+              <label htmlFor="description">
+                Description
+              </label>
 
               <textarea
                 id="description"
@@ -322,7 +399,9 @@ function Goals() {
             </div>
 
             <div className="goal-form-group">
-              <label htmlFor="category">Category</label>
+              <label htmlFor="category">
+                Category
+              </label>
 
               <select
                 id="category"
@@ -330,18 +409,34 @@ function Goals() {
                 value={formData.category}
                 onChange={handleChange}
               >
-                <option value="Career">Career</option>
-                <option value="Learning">Learning</option>
-                <option value="DSA">DSA</option>
-                <option value="Project">Project</option>
-                <option value="Job Search">Job Search</option>
-                <option value="Personal">Personal</option>
-                <option value="Other">Other</option>
+                <option value="Career">
+                  Career
+                </option>
+                <option value="Learning">
+                  Learning
+                </option>
+                <option value="DSA">
+                  DSA
+                </option>
+                <option value="Project">
+                  Project
+                </option>
+                <option value="Job Search">
+                  Job Search
+                </option>
+                <option value="Personal">
+                  Personal
+                </option>
+                <option value="Other">
+                  Other
+                </option>
               </select>
             </div>
 
             <div className="goal-form-group">
-              <label htmlFor="priority">Priority</label>
+              <label htmlFor="priority">
+                Priority
+              </label>
 
               <select
                 id="priority"
@@ -349,14 +444,22 @@ function Goals() {
                 value={formData.priority}
                 onChange={handleChange}
               >
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
+                <option value="Low">
+                  Low
+                </option>
+                <option value="Medium">
+                  Medium
+                </option>
+                <option value="High">
+                  High
+                </option>
               </select>
             </div>
 
             <div className="goal-form-group">
-              <label htmlFor="status">Status</label>
+              <label htmlFor="status">
+                Status
+              </label>
 
               <select
                 id="status"
@@ -364,10 +467,18 @@ function Goals() {
                 value={formData.status}
                 onChange={handleChange}
               >
-                <option value="Not Started">Not Started</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-                <option value="Paused">Paused</option>
+                <option value="Not Started">
+                  Not Started
+                </option>
+                <option value="In Progress">
+                  In Progress
+                </option>
+                <option value="Completed">
+                  Completed
+                </option>
+                <option value="Paused">
+                  Paused
+                </option>
               </select>
             </div>
 
@@ -388,7 +499,9 @@ function Goals() {
             </div>
 
             <div className="goal-form-group">
-              <label htmlFor="deadline">Deadline</label>
+              <label htmlFor="deadline">
+                Deadline
+              </label>
 
               <input
                 id="deadline"
@@ -400,7 +513,9 @@ function Goals() {
             </div>
 
             <div className="goal-form-group full-width">
-              <label htmlFor="milestoneTitle">Add Milestone</label>
+              <label htmlFor="milestoneTitle">
+                Add Milestone
+              </label>
 
               <div className="milestone-input-row">
                 <input
@@ -408,7 +523,9 @@ function Goals() {
                   type="text"
                   value={milestoneTitle}
                   onChange={(event) =>
-                    setMilestoneTitle(event.target.value)
+                    setMilestoneTitle(
+                      event.target.value
+                    )
                   }
                   placeholder="e.g. Complete 50 DSA problems"
                 />
@@ -425,43 +542,51 @@ function Goals() {
 
             {formData.milestones.length > 0 && (
               <div className="goal-form-group full-width">
-                <label>Milestones</label>
+                <label>
+                  Milestones
+                </label>
 
                 <div className="milestone-list">
-                  {formData.milestones.map((milestone, index) => (
-                    <div
-                      className="milestone-row"
-                      key={index}
-                    >
-                      <label className="milestone-check">
-                        <input
-                          type="checkbox"
-                          checked={milestone.completed}
-                          onChange={() =>
-                            toggleMilestone(index)
-                          }
-                        />
+                  {formData.milestones.map(
+                    (milestone, index) => (
+                      <div
+                        className="milestone-row"
+                        key={index}
+                      >
+                        <label className="milestone-check">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(
+                              milestone.completed
+                            )}
+                            onChange={() =>
+                              toggleMilestone(index)
+                            }
+                          />
 
-                        <span
-                          className={
-                            milestone.completed
-                              ? "completed-milestone"
-                              : ""
+                          <span
+                            className={
+                              milestone.completed
+                                ? "completed-milestone"
+                                : ""
+                            }
+                          >
+                            {milestone.title}
+                          </span>
+                        </label>
+
+                        <button
+                          type="button"
+                          className="text-button"
+                          onClick={() =>
+                            removeMilestone(index)
                           }
                         >
-                          {milestone.title}
-                        </span>
-                      </label>
-
-                      <button
-                        type="button"
-                        className="text-button"
-                        onClick={() => removeMilestone(index)}
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  ))}
+                          Remove
+                        </button>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             )}
@@ -495,110 +620,247 @@ function Goals() {
       <div className="goals-list-header">
         <div>
           <h2>Your Goals</h2>
-          <p>Track progress across your career objectives.</p>
+
+          <p>
+            Track progress across your career objectives.
+          </p>
         </div>
       </div>
 
-      {!loading && goals.length === 0 && !showForm && (
-        <div className="goals-empty-state">
-          <div className="goals-empty-icon">🎯</div>
-
-          <h2>No goals yet</h2>
-
-          <p>
-            Add your first career goal and start tracking your progress.
-          </p>
-
-          <button className="secondary-button" onClick={openAddForm}>
-            Create Your First Goal
-          </button>
-        </div>
-      )}
-
       {!loading && goals.length > 0 && (
-        <div className="goals-list">
-          {goals.map((goal) => (
-            <div className="goal-card" key={goal._id}>
-              <div className="goal-card-top">
-                <div>
-                  <p className="goal-category">{goal.category}</p>
+        <div className="goal-filters">
+          <input
+            type="text"
+            placeholder="Search goals..."
+            value={searchTerm}
+            onChange={(event) =>
+              setSearchTerm(event.target.value)
+            }
+          />
 
-                  <h3>{goal.title}</h3>
+          <select
+            value={categoryFilter}
+            onChange={(event) =>
+              setCategoryFilter(event.target.value)
+            }
+          >
+            <option value="All">
+              All Categories
+            </option>
+            <option value="Career">
+              Career
+            </option>
+            <option value="Learning">
+              Learning
+            </option>
+            <option value="DSA">
+              DSA
+            </option>
+            <option value="Project">
+              Project
+            </option>
+            <option value="Job Search">
+              Job Search
+            </option>
+            <option value="Personal">
+              Personal
+            </option>
+            <option value="Other">
+              Other
+            </option>
+          </select>
 
-                  {goal.description && (
-                    <p className="goal-description">
-                      {goal.description}
-                    </p>
-                  )}
-                </div>
-
-                <div className="goal-badges">
-                  <span className="goal-priority">
-                    {goal.priority}
-                  </span>
-
-                  <span className="goal-status">
-                    {goal.status}
-                  </span>
-                </div>
-              </div>
-
-              <div className="goal-progress-section">
-                <div className="goal-progress-header">
-                  <span>Progress</span>
-                  <strong>{goal.progress}%</strong>
-                </div>
-
-                <div className="goal-progress-track">
-                  <div
-                    className="goal-progress-fill"
-                    style={{ width: goal.progress + "%" }}
-                  />
-                </div>
-              </div>
-
-              <div className="goal-card-bottom">
-                <div className="goal-meta">
-                  {goal.deadline && (
-                    <span>
-                      Deadline:{" "}
-                      {new Date(goal.deadline).toLocaleDateString()}
-                    </span>
-                  )}
-
-                  <span>
-                    Milestones:{" "}
-                    {
-                      goal.milestones.filter(
-                        (milestone) => milestone.completed
-                      ).length
-                    }
-                    /{goal.milestones.length}
-                  </span>
-                </div>
-
-                <div className="goal-actions">
-                  <button
-                    type="button"
-                    className="secondary-button"
-                    onClick={() => openEditForm(goal)}
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    type="button"
-                    className="secondary-button"
-                    onClick={() => handleDelete(goal._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+          <select
+            value={statusFilter}
+            onChange={(event) =>
+              setStatusFilter(event.target.value)
+            }
+          >
+            <option value="All">
+              All Statuses
+            </option>
+            <option value="Not Started">
+              Not Started
+            </option>
+            <option value="In Progress">
+              In Progress
+            </option>
+            <option value="Completed">
+              Completed
+            </option>
+            <option value="Paused">
+              Paused
+            </option>
+          </select>
         </div>
       )}
+
+      {!loading &&
+        goals.length === 0 &&
+        !showForm && (
+          <div className="goals-empty-state">
+            <div className="goals-empty-icon">
+              ðŸŽ¯
+            </div>
+
+            <h2>No goals yet</h2>
+
+            <p>
+              Add your first career goal and start
+              tracking your progress.
+            </p>
+
+            <button
+              className="secondary-button"
+              onClick={openAddForm}
+            >
+              Create Your First Goal
+            </button>
+          </div>
+        )}
+
+      {!loading &&
+        goals.length > 0 &&
+        filteredGoals.length === 0 && (
+          <div className="goals-empty-state">
+            <div className="goals-empty-icon">
+              ðŸ”Ž
+            </div>
+
+            <h2>No matching goals</h2>
+
+            <p>
+              Try changing your search or filters.
+            </p>
+
+            <button
+              className="secondary-button"
+              onClick={() => {
+                setSearchTerm("");
+                setCategoryFilter("All");
+                setStatusFilter("All");
+              }}
+            >
+              Clear Filters
+            </button>
+          </div>
+        )}
+
+      {!loading &&
+        filteredGoals.length > 0 && (
+          <div className="goals-list">
+            {filteredGoals.map((goal) => {
+              const milestones = Array.isArray(
+                goal.milestones
+              )
+                ? goal.milestones
+                : [];
+
+              const completedMilestones =
+                milestones.filter(
+                  (milestone) =>
+                    milestone.completed
+                ).length;
+
+              return (
+                <div
+                  className="goal-card"
+                  key={goal._id}
+                >
+                  <div className="goal-card-top">
+                    <div>
+                      <p className="goal-category">
+                        {goal.category}
+                      </p>
+
+                      <h3>{goal.title}</h3>
+
+                      {goal.description && (
+                        <p className="goal-description">
+                          {goal.description}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="goal-badges">
+                      <span className="goal-priority">
+                        {goal.priority}
+                      </span>
+
+                      <span className="goal-status">
+                        {goal.status}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="goal-progress-section">
+                    <div className="goal-progress-header">
+                      <span>
+                        Progress
+                      </span>
+
+                      <strong>
+                        {goal.progress}%
+                      </strong>
+                    </div>
+
+                    <div className="goal-progress-track">
+                      <div
+                        className="goal-progress-fill"
+                        style={{
+                          width:
+                            Number(goal.progress) +
+                            "%",
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="goal-card-bottom">
+                    <div className="goal-meta">
+                      {goal.deadline && (
+                        <span>
+                          Deadline:{" "}
+                          {new Date(
+                            goal.deadline
+                          ).toLocaleDateString()}
+                        </span>
+                      )}
+
+                      <span>
+                        Milestones:{" "}
+                        {completedMilestones}/
+                        {milestones.length}
+                      </span>
+                    </div>
+
+                    <div className="goal-actions">
+                      <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={() =>
+                          openEditForm(goal)
+                        }
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        type="button"
+                        className="secondary-button"
+                        onClick={() =>
+                          handleDelete(goal._id)
+                        }
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
       {loading && (
         <div className="goals-empty-state">
