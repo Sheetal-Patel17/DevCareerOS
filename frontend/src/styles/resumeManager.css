@@ -344,3 +344,41 @@
     flex-direction: column;
   }
 }
+.resume-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.resume-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.resume-status {
+  white-space: nowrap;
+}
+
+.resume-actions .secondary-button {
+  min-width: 72px;
+}
+
+.resume-card-summary {
+  max-width: 900px;
+}
+
+@media (max-width: 700px) {
+  .resume-manager-header h1 {
+    font-size: 28px;
+  }
+
+  .resume-card {
+    padding: 18px;
+  }
+
+  .resume-actions {
+    width: 100%;
+  }
+
+  .resume-actions button {
+    flex: 1;
+  }
+}
