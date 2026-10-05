@@ -10,6 +10,7 @@ import "./styles/dashboard.css";
 import Interviews from "./pages/Interviews";
 import Goals from "./pages/Goals";
 import ResumeManager from "./pages/ResumeManager";
+import ProfileSettings from "./pages/ProfileSettings";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("devcareer_token");
@@ -82,6 +83,14 @@ function App() {
   element={
     <ProtectedRoute>
       <ResumeManager />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/settings"
+  element={
+    <ProtectedRoute>
+      <ProfileSettings />
     </ProtectedRoute>
   }
 />

@@ -113,14 +113,15 @@ return ( <aside className="sidebar"> <div className="brand"> <div className="bra
       <span>Resume Manager</span>
     </NavLink>
 
-    <button
-      type="button"
-      className="nav-item"
-    >
-      <Settings size={18} />
-      <span>Settings</span>
-    </button>
-
+   <NavLink
+  to="/settings"
+  className={({ isActive }) =>
+    "nav-item" + (isActive ? " active" : "")
+  }
+>
+  <Settings size={18} />
+  <span>Settings</span>
+</NavLink>
     <div className="profile-mini">
       <div className="profile-avatar">
         <UserRound size={18} />
