@@ -83,7 +83,7 @@ function ProjectCard({ project, onEdit, onDelete }) {
           Edit
         </button>
 
-        <button type="button" onClick={() => onDelete(project.id)}>
+        <button type="button" onClick={() => onDelete(project._id)}>
           <Trash2 size={14} />
           Delete
         </button>
