@@ -37,8 +37,8 @@ function Applications() {
   }, [applications, searchTerm, statusFilter]);
 
   function handleSave(application) {
-    if (application.id) {
-      updateApplication(application.id, application).then((data) => {
+    if (application._id) {
+      updateApplication(application._id, application).then((data) => {
         setApplications((current) => current.map((item) => item._id === application._id ? data.application : item));
       }).catch((error) => console.error(error));
     } else {
