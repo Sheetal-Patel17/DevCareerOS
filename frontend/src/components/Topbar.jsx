@@ -4,7 +4,7 @@ function Topbar({ onMenuClick }) {
   return (
     <header className="topbar">
       <div className="topbar-left">
-        <button type="button" className="mobile-menu-button" onClick={onMenuClick} aria-label="Open navigation">
+        <button type="button" className="mobile-menu-button" onClick={() => window.dispatchEvent(new Event("devcareer:open-menu"))} aria-label="Open navigation">
           <Menu size={20} />
         </button>
         <div className="search-box">
