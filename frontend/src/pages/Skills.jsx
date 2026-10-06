@@ -39,8 +39,8 @@ function Skills() {
   }, [skills, searchTerm, categoryFilter, levelFilter]);
 
   function handleSave(skill) {
-    if (skill.id) {
-      updateSkill(skill.id, skill).then((data) => setSkills((current) => current.map((item) => item._id === skill._id ? data.skill : item))).catch((error) => console.error(error));
+    if (skill._id) {
+      updateSkill(skill._id, skill).then((data) => setSkills((current) => current.map((item) => item._id === skill._id ? data.skill : item))).catch((error) => console.error(error));
     } else {
       createSkill(skill).then((data) => setSkills((current) => [data.skill, ...current])).catch((error) => console.error(error));
     }
