@@ -11,12 +11,20 @@ import {
   Target,
   Trophy,
   UserRound,
+  Github,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
 
 const navigationItems = [
-  {
+  
+{
+  label: "GitHub Activity",
+  icon: Github,
+  path: "/github",
+},
+
+{
     label: "Dashboard",
     icon: LayoutDashboard,
     path: "/",

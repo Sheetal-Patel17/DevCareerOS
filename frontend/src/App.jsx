@@ -13,6 +13,7 @@ import ResumeManager from "./pages/ResumeManager";
 import ProfileSettings from "./pages/ProfileSettings";
 import "./index.css";
 import "./styles/dashboard.css";
+import GithubActivity from "./pages/GithubActivity";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("devcareer_token");
@@ -101,6 +102,14 @@ function App() {
         />
 
         <Route
+<Route
+  path="/github"
+  element={
+    <ProtectedRoute>
+      <GithubActivity />
+    </ProtectedRoute>
+  }
+/>
           path="/analytics"
           element={
             <ProtectedRoute>
