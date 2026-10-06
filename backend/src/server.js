@@ -10,6 +10,7 @@ const interviewRoutes = require("./routes/interviewRoutes");
 const goalRoutes = require("./routes/goalRoutes");
 const resumeRoutes = require("./routes/resumeRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const analyticsRoutes = require("./routes/analyticsRoutes");
 
 const app = express();
 
@@ -40,6 +41,8 @@ app.use("/api/interviews", interviewRoutes);
 app.use("/api/goals", goalRoutes);
 app.use("/api/resumes", resumeRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/analytics", analyticsRoutes);
+
 
 async function startServer() {
   try {
