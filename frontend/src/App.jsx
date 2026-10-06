@@ -1,16 +1,17 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Applications from "./pages/Applications";
+import CareerAnalytics from "./pages/CareerAnalytics";
 import Login from "./pages/Login";
 import Projects from "./pages/Projects";
 import Register from "./pages/Register";
 import Skills from "./pages/Skills";
-import "./index.css";
-import "./styles/dashboard.css";
 import Interviews from "./pages/Interviews";
 import Goals from "./pages/Goals";
 import ResumeManager from "./pages/ResumeManager";
 import ProfileSettings from "./pages/ProfileSettings";
+import "./index.css";
+import "./styles/dashboard.css";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("devcareer_token");
@@ -61,39 +62,51 @@ function App() {
             </ProtectedRoute>
           }
         />
-             
-         <Route
-  path="/interviews"
-  element={
-    <ProtectedRoute>
-      <Interviews />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/goals"
-  element={
-    <ProtectedRoute>
-      <Goals />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/resumes"
-  element={
-    <ProtectedRoute>
-      <ResumeManager />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/settings"
-  element={
-    <ProtectedRoute>
-      <ProfileSettings />
-    </ProtectedRoute>
-  }
-/>
+
+        <Route
+          path="/interviews"
+          element={
+            <ProtectedRoute>
+              <Interviews />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/goals"
+          element={
+            <ProtectedRoute>
+              <Goals />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/resumes"
+          element={
+            <ProtectedRoute>
+              <ResumeManager />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute>
+              <CareerAnalytics />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <ProfileSettings />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
