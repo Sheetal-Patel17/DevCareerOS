@@ -1,16 +1,20 @@
 import { Plus } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import ApplicationStats from "../components/applications/ApplicationStats";
 import ApplicationFilters from "../components/applications/ApplicationFilters";
 import ApplicationCard from "../components/applications/ApplicationCard";
 import ApplicationForm from "../components/applications/ApplicationForm";
-import { initialApplications } from "../data/applicationData";
+import { getApplications, createApplication, updateApplication, deleteApplication } from "../services/applicationService";
 import "../styles/applications.css";
 
 function Applications() {
-  const [applications, setApplications] = useState(initialApplications);
+  const [applications, setApplications] = useState([]);
+
+  useEffect(() => {
+    getApplications().then((data) => setApplications(data.applications || [])).catch((error) => console.error("Application loading error:", error));
+  }, []);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [showForm, setShowForm] = useState(false);
@@ -34,19 +38,11 @@ function Applications() {
 
   function handleSave(application) {
     if (application.id) {
-      setApplications((current) =>
-        current.map((item) =>
-          item.id === application.id ? application : item
-        )
-      );
+      updateApplication(application.id, application).then((data) => {
+        setApplications((current) => current.map((item) => item._id === application._id ? data.application : item));
+      }).catch((error) => console.error(error));
     } else {
-      setApplications((current) => [
-        {
-          ...application,
-          id: Date.now(),
-        },
-        ...current,
-      ]);
+      createApplication(application).then((data) => setApplications((current) => [data.application, ...current])).catch((error) => console.error(error));
     }
 
     setShowForm(false);
@@ -67,9 +63,7 @@ function Applications() {
       return;
     }
 
-    setApplications((current) =>
-      current.filter((application) => application.id !== id)
-    );
+    deleteApplication(id).then(() => setApplications((current) => current.filter((application) => application._id !== id))).catch((error) => console.error(error));
   }
 
   function handleCloseForm() {
@@ -131,7 +125,7 @@ function Applications() {
                 {filteredApplications.map((application) => (
                   <ApplicationCard
                     application={application}
-                    key={application.id}
+                    key={application._id}
                     onEdit={handleEdit}
                     onDelete={handleDelete}
                   />
