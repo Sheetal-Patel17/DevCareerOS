@@ -50,7 +50,7 @@ function ApplicationCard({ application, onEdit, onDelete }) {
           Edit
         </button>
 
-        <button type="button" onClick={() => onDelete(application.id)}>
+        <button type="button" onClick={() => onDelete(application._id)}>
           <Trash2 size={15} />
           Delete
         </button>
