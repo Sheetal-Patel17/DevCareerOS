@@ -369,7 +369,8 @@
 
 @media (max-width: 700px) {
   .goals-page {
-    padding: 20px;
+    width: 100%;
+    padding: 18px 14px 28px;
   }
 
   .goals-header {
@@ -425,4 +426,31 @@
 
 .goal-stat-card strong {
   line-height: 1;
+}
+
+@media (max-width: 700px) {
+  .goals-header,
+  .goal-form,
+  .goal-card,
+  .goal-stat-card {
+    width: 100%;
+  }
+
+  .goal-form {
+    padding: 18px;
+  }
+
+  .goal-form-group input,
+  .goal-form-group select,
+  .goal-form-group textarea {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .milestone-input-row .secondary-button,
+  .goal-form-actions button,
+  .goal-actions button {
+    width: 100%;
+    min-height: 44px;
+  }
 }
