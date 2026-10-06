@@ -1,0 +1,10 @@
+const express = require("express");
+const { getApplications, createApplication, updateApplication, deleteApplication } = require("../controllers/applicationController");
+const auth = require("../middleware/authMiddleware");
+const router = express.Router();
+router.use(auth);
+router.get("/", getApplications);
+router.post("/", createApplication);
+router.put("/:id", updateApplication);
+router.delete("/:id", deleteApplication);
+module.exports = router;
