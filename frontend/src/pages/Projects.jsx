@@ -40,8 +40,8 @@ function Projects() {
   }, [projects, searchTerm, statusFilter]);
 
   function handleSave(project) {
-    if (project.id) {
-      updateProject(project.id, project).then((data) => setProjects((current) => current.map((item) => item._id === project._id ? data.project : item))).catch((error) => console.error(error));
+    if (project._id) {
+      updateProject(project._id, project).then((data) => setProjects((current) => current.map((item) => item._id === project._id ? data.project : item))).catch((error) => console.error(error));
     } else {
       createProject(project).then((data) => setProjects((current) => [data.project, ...current])).catch((error) => console.error(error));
     }
