@@ -59,7 +59,7 @@ function Sidebar() {
         <NavLink to="/resumes" onClick={() => setOpen(false)} className={({ isActive }) => "nav-item" + (isActive ? " active" : "")}>
           <ListChecks size={18} /><span>Resume Manager</span>
         </NavLink>
-        <NavLink to="/settings" onClick={onClose} className={({ isActive }) => "nav-item" + (isActive ? " active" : "")}>
+        <NavLink to="/settings" onClick={() => setOpen(false)} className={({ isActive }) => "nav-item" + (isActive ? " active" : "")}>
           <Settings size={18} /><span>Settings</span>
         </NavLink>
 
