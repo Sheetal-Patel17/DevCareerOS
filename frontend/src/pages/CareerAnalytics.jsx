@@ -2,6 +2,37 @@ import React, { useEffect, useState } from "react";
 import { getCareerAnalytics } from "../services/analyticsService";
 import "../styles/careerAnalytics.css";
 
+function StatBar({ label, value, total, suffix = "" }) {
+  const numericValue = Number(value || 0);
+  const numericTotal = Number(total || 0);
+
+  const percentage =
+    numericTotal > 0
+      ? Math.min((numericValue / numericTotal) * 100, 100)
+      : numericValue > 0
+        ? 100
+        : 0;
+
+  return (
+    <div className="analytics-bar-row">
+      <div className="analytics-bar-label">
+        <span>{label}</span>
+        <strong>
+          {numericValue}
+          {suffix}
+        </strong>
+      </div>
+
+      <div className="analytics-bar-track">
+        <div
+          className="analytics-bar-fill"
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
 function CareerAnalytics() {
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -111,8 +142,12 @@ function CareerAnalytics() {
 
   const dsaCompletion = Number(summary.dsaCompletion || 0);
   const goalProgress = Number(goals.averageProgress || 0);
-  const interviewSuccessRate = Number(summary.interviewSuccessRate || 0);
-  const resumeReadyPercentage = Number(resumes.readyPercentage || 0);
+  const interviewSuccessRate = Number(
+    summary.interviewSuccessRate || 0
+  );
+  const resumeReadyPercentage = Number(
+    resumes.readyPercentage || 0
+  );
 
   return (
     <main className="career-analytics-page">
@@ -156,14 +191,14 @@ function CareerAnalytics() {
 
             <strong>{summary.totalDsaProblems || 0}</strong>
 
-            <p>
-              {summary.solvedDsaProblems || 0} solved
-            </p>
+            <p>{summary.solvedDsaProblems || 0} solved</p>
 
             <div className="analytics-progress-track">
               <div
                 className="analytics-progress-fill"
-                style={{ width: `${Math.min(dsaCompletion, 100)}%` }}
+                style={{
+                  width: `${Math.min(dsaCompletion, 100)}%`,
+                }}
               />
             </div>
 
@@ -181,14 +216,14 @@ function CareerAnalytics() {
 
             <strong>{summary.totalGoals || 0}</strong>
 
-            <p>
-              {summary.completedGoals || 0} completed
-            </p>
+            <p>{summary.completedGoals || 0} completed</p>
 
             <div className="analytics-progress-track">
               <div
                 className="analytics-progress-fill"
-                style={{ width: `${Math.min(goalProgress, 100)}%` }}
+                style={{
+                  width: `${Math.min(goalProgress, 100)}%`,
+                }}
               />
             </div>
 
@@ -206,9 +241,7 @@ function CareerAnalytics() {
 
             <strong>{summary.totalInterviews || 0}</strong>
 
-            <p>
-              {summary.selectedInterviews || 0} selected
-            </p>
+            <p>{summary.selectedInterviews || 0} selected</p>
 
             <div className="analytics-progress-track">
               <div
@@ -233,15 +266,16 @@ function CareerAnalytics() {
 
             <strong>{summary.totalResumes || 0}</strong>
 
-            <p>
-              {summary.readyResumes || 0} ready
-            </p>
+            <p>{summary.readyResumes || 0} ready</p>
 
             <div className="analytics-progress-track">
               <div
                 className="analytics-progress-fill"
                 style={{
-                  width: `${Math.min(resumeReadyPercentage, 100)}%`,
+                  width: `${Math.min(
+                    resumeReadyPercentage,
+                    100
+                  )}%`,
                 }}
               />
             </div>
@@ -271,201 +305,250 @@ function CareerAnalytics() {
         </div>
       </section>
 
+      <section className="analytics-chart-grid">
+        <div className="analytics-overview">
+          <div className="analytics-section-header">
+            <div>
+              <h2>DSA Difficulty</h2>
+              <p>
+                Distribution of your problem-solving practice.
+              </p>
+            </div>
+          </div>
+
+          <div className="analytics-bars">
+            <StatBar
+              label="Easy"
+              value={dsa.difficulty?.easy}
+              total={dsa.total}
+            />
+
+            <StatBar
+              label="Medium"
+              value={dsa.difficulty?.medium}
+              total={dsa.total}
+            />
+
+            <StatBar
+              label="Hard"
+              value={dsa.difficulty?.hard}
+              total={dsa.total}
+            />
+          </div>
+        </div>
+
+        <div className="analytics-overview">
+          <div className="analytics-section-header">
+            <div>
+              <h2>DSA Status</h2>
+              <p>Current progress across your problems.</p>
+            </div>
+          </div>
+
+          <div className="analytics-bars">
+            <StatBar
+              label="Solved"
+              value={dsa.solved}
+              total={dsa.total}
+            />
+
+            <StatBar
+              label="In Progress"
+              value={dsa.inProgress}
+              total={dsa.total}
+            />
+
+            <StatBar
+              label="Not Started"
+              value={dsa.notStarted}
+              total={dsa.total}
+            />
+          </div>
+        </div>
+
+        <div className="analytics-overview">
+          <div className="analytics-section-header">
+            <div>
+              <h2>Goal Status</h2>
+              <p>How your current goals are distributed.</p>
+            </div>
+          </div>
+
+          <div className="analytics-bars">
+            <StatBar
+              label="Completed"
+              value={goals.completed}
+              total={goals.total}
+            />
+
+            <StatBar
+              label="In Progress"
+              value={goals.inProgress}
+              total={goals.total}
+            />
+
+            <StatBar
+              label="Not Started"
+              value={goals.notStarted}
+              total={goals.total}
+            />
+
+            <StatBar
+              label="Paused"
+              value={goals.paused}
+              total={goals.total}
+            />
+          </div>
+        </div>
+
+        <div className="analytics-overview">
+          <div className="analytics-section-header">
+            <div>
+              <h2>Interview Outcomes</h2>
+              <p>Overview of your interview results.</p>
+            </div>
+          </div>
+
+          <div className="analytics-bars">
+            <StatBar
+              label="Completed"
+              value={interviews.completed}
+              total={interviews.total}
+            />
+
+            <StatBar
+              label="Selected"
+              value={interviews.selected}
+              total={interviews.total}
+            />
+
+            <StatBar
+              label="Rejected"
+              value={interviews.rejected}
+              total={interviews.total}
+            />
+
+            <StatBar
+              label="Cancelled"
+              value={interviews.cancelled}
+              total={interviews.total}
+            />
+          </div>
+        </div>
+
+        <div className="analytics-overview">
+          <div className="analytics-section-header">
+            <div>
+              <h2>Resume Status</h2>
+              <p>Readiness of your saved resumes.</p>
+            </div>
+          </div>
+
+          <div className="analytics-bars">
+            <StatBar
+              label="Ready"
+              value={resumes.ready}
+              total={resumes.total}
+            />
+
+            <StatBar
+              label="Draft"
+              value={resumes.draft}
+              total={resumes.total}
+            />
+
+            <StatBar
+              label="Archived"
+              value={resumes.archived}
+              total={resumes.total}
+            />
+          </div>
+        </div>
+
+        <div className="analytics-overview">
+          <div className="analytics-section-header">
+            <div>
+              <h2>Interview Types</h2>
+              <p>Breakdown of your interview categories.</p>
+            </div>
+          </div>
+
+          <div className="analytics-bars">
+            {Object.keys(interviews.types || {}).length > 0 ? (
+              Object.entries(interviews.types).map(
+                ([type, count]) => (
+                  <StatBar
+                    key={type}
+                    label={type}
+                    value={count}
+                    total={interviews.total}
+                  />
+                )
+              )
+            ) : (
+              <div className="analytics-empty-chart">
+                <p>No interview type data yet.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
       <section className="analytics-overview">
         <div className="analytics-section-header">
           <div>
-            <h2>DSA Progress</h2>
-            <p>Problem-solving activity and completion progress.</p>
+            <h2>Detailed Statistics</h2>
+            <p>Additional metrics from your career activity.</p>
           </div>
         </div>
 
         <div className="analytics-basic-grid">
           <div>
-            <span>Total</span>
-            <strong>{dsa.total || 0}</strong>
-          </div>
-
-          <div>
-            <span>Solved</span>
+            <span>DSA Solved</span>
             <strong>{dsa.solved || 0}</strong>
           </div>
 
           <div>
-            <span>In Progress</span>
-            <strong>{dsa.inProgress || 0}</strong>
-          </div>
-
-          <div>
-            <span>Not Started</span>
-            <strong>{dsa.notStarted || 0}</strong>
-          </div>
-        </div>
-
-        <div className="analytics-detail-grid">
-          <div>
-            <span>Easy</span>
-            <strong>{dsa.difficulty?.easy || 0}</strong>
-          </div>
-
-          <div>
-            <span>Medium</span>
-            <strong>{dsa.difficulty?.medium || 0}</strong>
-          </div>
-
-          <div>
-            <span>Hard</span>
-            <strong>{dsa.difficulty?.hard || 0}</strong>
-          </div>
-
-          <div>
-            <span>Completion</span>
-            <strong>{dsa.completionPercentage || 0}%</strong>
-          </div>
-        </div>
-      </section>
-
-      <section className="analytics-overview">
-        <div className="analytics-section-header">
-          <div>
-            <h2>Goals</h2>
-            <p>Career goals and progress toward completion.</p>
-          </div>
-        </div>
-
-        <div className="analytics-basic-grid">
-          <div>
-            <span>Total Goals</span>
-            <strong>{goals.total || 0}</strong>
-          </div>
-
-          <div>
-            <span>Completed</span>
-            <strong>{goals.completed || 0}</strong>
-          </div>
-
-          <div>
-            <span>In Progress</span>
-            <strong>{goals.inProgress || 0}</strong>
-          </div>
-
-          <div>
-            <span>Average Progress</span>
-            <strong>{goals.averageProgress || 0}%</strong>
-          </div>
-        </div>
-
-        <div className="analytics-detail-grid">
-          <div>
-            <span>Not Started</span>
-            <strong>{goals.notStarted || 0}</strong>
-          </div>
-
-          <div>
-            <span>Paused</span>
-            <strong>{goals.paused || 0}</strong>
-          </div>
-
-          <div>
-            <span>Completion</span>
+            <span>Goal Completion</span>
             <strong>{goals.completionPercentage || 0}%</strong>
           </div>
 
           <div>
-            <span>Categories</span>
-            <strong>
-              {Object.keys(goals.categories || {}).length}
-            </strong>
-          </div>
-        </div>
-      </section>
-
-      <section className="analytics-overview">
-        <div className="analytics-section-header">
-          <div>
-            <h2>Interview Performance</h2>
-            <p>Track interview activity and outcomes.</p>
-          </div>
-        </div>
-
-        <div className="analytics-basic-grid">
-          <div>
-            <span>Total Interviews</span>
-            <strong>{interviews.total || 0}</strong>
-          </div>
-
-          <div>
-            <span>Scheduled</span>
-            <strong>{interviews.scheduled || 0}</strong>
-          </div>
-
-          <div>
-            <span>Completed</span>
-            <strong>{interviews.completed || 0}</strong>
-          </div>
-
-          <div>
-            <span>Selected</span>
-            <strong>{interviews.selected || 0}</strong>
-          </div>
-        </div>
-
-        <div className="analytics-detail-grid">
-          <div>
-            <span>Rejected</span>
-            <strong>{interviews.rejected || 0}</strong>
-          </div>
-
-          <div>
-            <span>Cancelled</span>
-            <strong>{interviews.cancelled || 0}</strong>
-          </div>
-
-          <div>
-            <span>Upcoming</span>
-            <strong>{interviews.upcoming || 0}</strong>
-          </div>
-
-          <div>
-            <span>Success Rate</span>
+            <span>Interview Success</span>
             <strong>{interviews.successRate || 0}%</strong>
           </div>
-        </div>
-      </section>
-
-      <section className="analytics-overview">
-        <div className="analytics-section-header">
-          <div>
-            <h2>Resume Status</h2>
-            <p>Monitor your resume preparation and readiness.</p>
-          </div>
-        </div>
-
-        <div className="analytics-basic-grid">
-          <div>
-            <span>Total Resumes</span>
-            <strong>{resumes.total || 0}</strong>
-          </div>
 
           <div>
-            <span>Draft</span>
-            <strong>{resumes.draft || 0}</strong>
-          </div>
-
-          <div>
-            <span>Ready</span>
-            <strong>{resumes.ready || 0}</strong>
-          </div>
-
-          <div>
-            <span>Archived</span>
-            <strong>{resumes.archived || 0}</strong>
+            <span>Resume Readiness</span>
+            <strong>{resumes.readyPercentage || 0}%</strong>
           </div>
         </div>
 
         <div className="analytics-detail-grid">
           <div>
-            <span>Ready Percentage</span>
-            <strong>{resumes.readyPercentage || 0}%</strong>
+            <span>Easy Solved</span>
+            <strong>
+              {dsa.difficulty?.solvedEasy || 0}
+            </strong>
+          </div>
+
+          <div>
+            <span>Medium Solved</span>
+            <strong>
+              {dsa.difficulty?.solvedMedium || 0}
+            </strong>
+          </div>
+
+          <div>
+            <span>Hard Solved</span>
+            <strong>
+              {dsa.difficulty?.solvedHard || 0}
+            </strong>
+          </div>
+
+          <div>
+            <span>Upcoming Interviews</span>
+            <strong>{interviews.upcoming || 0}</strong>
           </div>
         </div>
       </section>
