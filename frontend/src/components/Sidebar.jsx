@@ -11,20 +11,13 @@ import {
   Target,
   Trophy,
   UserRound,
-  Github,
+  GitBranch,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
 
 const navigationItems = [
-  
-{
-  label: "GitHub Activity",
-  icon: Github,
-  path: "/github",
-},
-
-{
+  {
     label: "Dashboard",
     icon: LayoutDashboard,
     path: "/",
@@ -47,7 +40,12 @@ const navigationItems = [
   {
     label: "DSA Progress",
     icon: Trophy,
-    path: "#",
+    path: "/dsa",
+  },
+  {
+    label: "GitHub Activity",
+    icon: GitBranch,
+    path: "/github",
   },
   {
     label: "Interviews",
@@ -90,19 +88,6 @@ function Sidebar() {
 
         {navigationItems.map((item) => {
           const Icon = item.icon;
-
-          if (item.path === "#") {
-            return (
-              <button
-                type="button"
-                className="nav-item"
-                key={item.label}
-              >
-                <Icon size={18} />
-                <span>{item.label}</span>
-              </button>
-            );
-          }
 
           return (
             <NavLink

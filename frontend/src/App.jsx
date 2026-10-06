@@ -1,19 +1,22 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
 import Dashboard from "./Dashboard";
+
 import Applications from "./pages/Applications";
 import CareerAnalytics from "./pages/CareerAnalytics";
 import DsaTracker from "./pages/DsaTracker";
+import GithubActivity from "./pages/GithubActivity";
+import Goals from "./pages/Goals";
+import Interviews from "./pages/Interviews";
 import Login from "./pages/Login";
+import ProfileSettings from "./pages/ProfileSettings";
 import Projects from "./pages/Projects";
 import Register from "./pages/Register";
-import Skills from "./pages/Skills";
-import Interviews from "./pages/Interviews";
-import Goals from "./pages/Goals";
 import ResumeManager from "./pages/ResumeManager";
-import ProfileSettings from "./pages/ProfileSettings";
+import Skills from "./pages/Skills";
+
 import "./index.css";
 import "./styles/dashboard.css";
-import GithubActivity from "./pages/GithubActivity";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("devcareer_token");
@@ -102,18 +105,19 @@ function App() {
         />
 
         <Route
-<Route
-  path="/github"
-  element={
-    <ProtectedRoute>
-      <GithubActivity />
-    </ProtectedRoute>
-  }
-/>
           path="/analytics"
           element={
             <ProtectedRoute>
               <CareerAnalytics />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/github"
+          element={
+            <ProtectedRoute>
+              <GithubActivity />
             </ProtectedRoute>
           }
         />
@@ -128,9 +132,13 @@ function App() {
         />
 
         <Route path="/login" element={<Login />} />
+
         <Route path="/register" element={<Register />} />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route
+          path="*"
+          element={<Navigate to="/" replace />}
+        />
       </Routes>
     </BrowserRouter>
   );
