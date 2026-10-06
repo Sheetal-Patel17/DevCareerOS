@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const connectDatabase = require("./config/db");
+
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const dsaRoutes = require("./routes/dsaRoutes");
@@ -16,8 +17,15 @@ const githubActivityRoutes = require("./routes/githubActivityRoutes");
 const app = express();
 
 const PORT = process.env.PORT || 5000;
+const CLIENT_URL = process.env.CLIENT_URL || "*";
 
-app.use(cors());
+app.use(
+  cors({
+    origin: CLIENT_URL === "*" ? true : CLIENT_URL,
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -45,16 +53,30 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/github-activity", githubActivityRoutes);
 
-
 async function startServer() {
   try {
+    console.log("Starting DevCareerOS backend...");
+    console.log(
+      "MONGODB_URI present:",
+      Boolean(process.env.MONGODB_URI)
+    );
+    console.log(
+      "JWT_SECRET present:",
+      Boolean(process.env.JWT_SECRET)
+    );
+    console.log("CLIENT_URL:", CLIENT_URL);
+
     await connectDatabase();
 
-    app.listen(PORT, () => {
-      console.log(`DevCareerOS backend running on port ${PORT}`);
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(
+        "DevCareerOS backend running on port " + PORT
+      );
     });
   } catch (error) {
-    console.error("Server startup failed");
+    console.error("Server startup failed.");
+    console.error("Error message:", error.message);
+    console.error("Error stack:", error.stack);
     process.exit(1);
   }
 }
