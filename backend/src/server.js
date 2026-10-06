@@ -13,6 +13,9 @@ const resumeRoutes = require("./routes/resumeRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
 const githubActivityRoutes = require("./routes/githubActivityRoutes");
+const applicationRoutes = require("./routes/applicationRoutes");
+const skillRoutes = require("./routes/skillRoutes");
+const projectRoutes = require("./routes/projectRoutes");
 
 const app = express();
 
@@ -52,6 +55,9 @@ app.use("/api/resumes", resumeRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/github-activity", githubActivityRoutes);
+app.use("/api/applications", applicationRoutes);
+app.use("/api/skills", skillRoutes);
+app.use("/api/projects", projectRoutes);
 
 async function startServer() {
   try {

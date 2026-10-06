@@ -58,7 +58,7 @@ function Register() {
 
         {error && <div className="auth-error">{error}</div>}
 
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form onSubmit={handleSubmit} className="auth-form" autoComplete="off">
           <label>
             Full Name
             <div className="auth-input">
@@ -68,7 +68,7 @@ function Register() {
                 name="name"
                 value={form.name}
                 onChange={handleChange}
-                placeholder="Sheetal Patel"
+                placeholder="Your full name"
                 required
               />
             </div>

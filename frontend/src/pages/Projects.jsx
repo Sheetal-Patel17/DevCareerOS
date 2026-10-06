@@ -1,16 +1,20 @@
 import { FolderKanban, Plus } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import ProjectStats from "../components/projects/ProjectStats";
 import ProjectFilters from "../components/projects/ProjectFilters";
 import ProjectCard from "../components/projects/ProjectCard";
 import ProjectForm from "../components/projects/ProjectForm";
-import { initialProjects } from "../data/projectData";
+import { getProjects, createProject, updateProject, deleteProject } from "../services/projectService";
 import "../styles/projects.css";
 
 function Projects() {
-  const [projects, setProjects] = useState(initialProjects);
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    getProjects().then((data) => setProjects(data.projects || [])).catch((error) => console.error("Project loading error:", error));
+  }, []);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [showForm, setShowForm] = useState(false);
@@ -36,18 +40,10 @@ function Projects() {
   }, [projects, searchTerm, statusFilter]);
 
   function handleSave(project) {
-    if (project.id) {
-      setProjects((current) =>
-        current.map((item) => (item.id === project.id ? project : item))
-      );
+    if (project._id) {
+      updateProject(project._id, project).then((data) => setProjects((current) => current.map((item) => item._id === project._id ? data.project : item))).catch((error) => console.error(error));
     } else {
-      setProjects((current) => [
-        {
-          ...project,
-          id: Date.now(),
-        },
-        ...current,
-      ]);
+      createProject(project).then((data) => setProjects((current) => [data.project, ...current])).catch((error) => console.error(error));
     }
 
     setShowForm(false);
@@ -68,9 +64,7 @@ function Projects() {
       return;
     }
 
-    setProjects((current) =>
-      current.filter((project) => project.id !== id)
-    );
+    deleteProject(id).then(() => setProjects((current) => current.filter((project) => project._id !== id))).catch((error) => console.error(error));
   }
 
   function handleCloseForm() {
@@ -138,7 +132,7 @@ function Projects() {
               <div className="projects-grid">
                 {filteredProjects.map((project) => (
                   <ProjectCard
-                    key={project.id}
+                    key={project._id}
                     project={project}
                     onEdit={handleEdit}
                     onDelete={handleDelete}

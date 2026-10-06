@@ -40,7 +40,7 @@ function SkillCard({ skill, onEdit, onDelete }) {
           Edit
         </button>
 
-        <button type="button" onClick={() => onDelete(skill.id)}>
+        <button type="button" onClick={() => onDelete(skill._id)}>
           <Trash2 size={14} />
           Delete
         </button>
