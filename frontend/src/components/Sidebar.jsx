@@ -18,6 +18,7 @@ function Sidebar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("devcareer_user") || "{}");
+  const accountLabel = user.role === "admin" ? "Administrator" : "Career Member";
 
   useEffect(() => {
     const openMenu = () => setOpen(true);
@@ -67,7 +68,7 @@ function Sidebar() {
           <div className="profile-avatar"><UserRound size={18} /></div>
           <div className="profile-mini-text">
             <strong>{user.name || "Your Name"}</strong>
-            <span>{user.role || "Developer"}</span>
+            <span>{accountLabel}</span>
           </div>
         </div>
 
