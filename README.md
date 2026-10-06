@@ -840,27 +840,35 @@ docs/screenshots/
 
 ```
 
+## Screenshots
 
+### Dashboard
 
-Recommended screenshots:
+![DevCareerOS Dashboard](docs/screenshots/dashboard.png)
 
+### DSA Tracker
 
+![DSA Progress Tracker](docs/screenshots/dsa.png)
 
-1\. Dashboard
+### Interview Tracker
 
-2\. DSA Tracker
+![Interview Tracker](docs/screenshots/interviews.png)
 
-3\. Career Analytics
+### Career Goals
 
-4\. GitHub Activity
+![Career Goals](docs/screenshots/goals.png)
 
-5\. Profile Settings
+### Resume & Career Analytics
 
-6\. Interview Tracker
+![Career Analytics Dashboard](docs/screenshots/analytics.png)
 
+### GitHub Activity
 
+![GitHub Activity Dashboard](docs/screenshots/github.png)
 
-\---
+### Profile & Settings
+
+![Profile and Settings](docs/screenshots/settings.png)
 
 
 
