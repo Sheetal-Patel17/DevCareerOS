@@ -1,0 +1,397 @@
+.dsa-page {
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.dsa-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.dsa-eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.dsa-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.dsa-description {
+  max-width: 700px;
+  margin: 10px 0 0;
+  line-height: 1.6;
+  opacity: 0.72;
+}
+
+.dsa-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dsa-primary-button,
+.dsa-secondary-button,
+.dsa-clear-button,
+.dsa-action-button {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dsa-primary-button {
+  background: var(--button-bg, #111);
+  color: var(--button-text, #fff);
+}
+
+.dsa-secondary-button,
+.dsa-clear-button,
+.dsa-action-button {
+  background: transparent;
+  border-color: rgba(128, 128, 128, 0.25);
+  color: inherit;
+}
+
+.dsa-primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dsa-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.dsa-stat-card,
+.dsa-difficulty-summary > div {
+  padding: 20px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 16px;
+  background: rgba(128, 128, 128, 0.04);
+}
+
+.dsa-stat-card span,
+.dsa-difficulty-summary span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.86rem;
+  opacity: 0.7;
+}
+
+.dsa-stat-card strong,
+.dsa-difficulty-summary strong {
+  display: block;
+  font-size: 1.9rem;
+}
+
+.dsa-stat-card p,
+.dsa-difficulty-summary small {
+  display: block;
+  margin: 8px 0 0;
+  opacity: 0.62;
+}
+
+.dsa-difficulty-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dsa-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 13px 16px;
+  border: 1px solid rgba(128, 128, 128, 0.22);
+  border-radius: 12px;
+}
+
+.dsa-message button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.dsa-error {
+  border-color: rgba(180, 60, 60, 0.35);
+}
+
+.dsa-form-card,
+.dsa-list-card {
+  margin-bottom: 24px;
+  padding: 24px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 18px;
+  background: var(--card-bg, rgba(128, 128, 128, 0.04));
+}
+
+.dsa-section-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.dsa-section-header h2 {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+}
+
+.dsa-section-header p {
+  margin: 0;
+  opacity: 0.68;
+}
+
+.dsa-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.dsa-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.dsa-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.dsa-form-full {
+  grid-column: 1 / -1;
+}
+
+.dsa-form-group label,
+.dsa-search label,
+.dsa-filter-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.dsa-form-group input,
+.dsa-form-group select,
+.dsa-form-group textarea,
+.dsa-search input,
+.dsa-filter-group select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid rgba(128, 128, 128, 0.24);
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.dsa-form-group textarea {
+  resize: vertical;
+}
+
+.dsa-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.dsa-filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 22px;
+}
+
+.dsa-search,
+.dsa-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.dsa-clear-button {
+  height: 42px;
+}
+
+.dsa-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.dsa-table {
+  width: 100%;
+  min-width: 950px;
+  border-collapse: collapse;
+}
+
+.dsa-table th,
+.dsa-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.16);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.dsa-table th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.62;
+}
+
+.dsa-problem-title {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dsa-problem-title a {
+  font-size: 0.78rem;
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+.dsa-status,
+.dsa-difficulty {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+  background: rgba(128, 128, 128, 0.1);
+}
+
+.dsa-status-solved,
+.dsa-difficulty-easy {
+  border: 1px solid rgba(60, 150, 90, 0.25);
+}
+
+.dsa-status-progress,
+.dsa-difficulty-medium {
+  border: 1px solid rgba(180, 140, 50, 0.25);
+}
+
+.dsa-status-not-started,
+.dsa-difficulty-hard {
+  border: 1px solid rgba(180, 70, 70, 0.25);
+}
+
+.dsa-action-buttons {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.dsa-delete-button {
+  opacity: 0.8;
+}
+
+.dsa-empty-state,
+.dsa-state-card {
+  padding: 38px 20px;
+  text-align: center;
+  border: 1px dashed rgba(128, 128, 128, 0.28);
+  border-radius: 14px;
+}
+
+.dsa-empty-state h3 {
+  margin: 0 0 7px;
+}
+
+.dsa-empty-state p {
+  max-width: 520px;
+  margin: 0 auto 18px;
+  line-height: 1.6;
+  opacity: 0.68;
+}
+
+@media (max-width: 1100px) {
+  .dsa-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dsa-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dsa-clear-button {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 760px) {
+  .dsa-page {
+    padding: 20px;
+  }
+
+  .dsa-header {
+    flex-direction: column;
+  }
+
+  .dsa-header-actions {
+    width: 100%;
+  }
+
+  .dsa-header-actions button {
+    flex: 1;
+  }
+
+  .dsa-stats-grid,
+  .dsa-difficulty-summary,
+  .dsa-form-grid,
+  .dsa-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .dsa-form-full {
+    grid-column: auto;
+  }
+
+  .dsa-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .dsa-form-actions button {
+    width: 100%;
+  }
+
+  .dsa-form-card,
+  .dsa-list-card {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dsa-header h1 {
+    font-size: 1.65rem;
+  }
+
+  .dsa-stat-card strong,
+  .dsa-difficulty-summary strong {
+    font-size: 1.6rem;
+  }
+}
