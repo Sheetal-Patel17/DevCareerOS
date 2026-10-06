@@ -1,16 +1,20 @@
 import { Plus, Sparkles } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import SkillStats from "../components/skills/SkillStats";
 import SkillFilters from "../components/skills/SkillFilters";
 import SkillCard from "../components/skills/SkillCard";
 import SkillForm from "../components/skills/SkillForm";
-import { initialSkills } from "../data/skillData";
+import { getSkills, createSkill, updateSkill, deleteSkill } from "../services/skillService";
 import "../styles/skills.css";
 
 function Skills() {
-  const [skills, setSkills] = useState(initialSkills);
+  const [skills, setSkills] = useState([]);
+
+  useEffect(() => {
+    getSkills().then((data) => setSkills(data.skills || [])).catch((error) => console.error("Skill loading error:", error));
+  }, []);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [levelFilter, setLevelFilter] = useState("All");
@@ -36,17 +40,9 @@ function Skills() {
 
   function handleSave(skill) {
     if (skill.id) {
-      setSkills((current) =>
-        current.map((item) => (item.id === skill.id ? skill : item))
-      );
+      updateSkill(skill.id, skill).then((data) => setSkills((current) => current.map((item) => item._id === skill._id ? data.skill : item))).catch((error) => console.error(error));
     } else {
-      setSkills((current) => [
-        {
-          ...skill,
-          id: Date.now(),
-        },
-        ...current,
-      ]);
+      createSkill(skill).then((data) => setSkills((current) => [data.skill, ...current])).catch((error) => console.error(error));
     }
 
     setShowForm(false);
@@ -67,7 +63,7 @@ function Skills() {
       return;
     }
 
-    setSkills((current) => current.filter((skill) => skill.id !== id));
+    deleteSkill(id).then(() => setSkills((current) => current.filter((skill) => skill._id !== id))).catch((error) => console.error(error));
   }
 
   function handleCloseForm() {
@@ -139,7 +135,7 @@ function Skills() {
                 {filteredSkills.map((skill) => (
                   <SkillCard
                     skill={skill}
-                    key={skill.id}
+                    key={skill._id}
                     onEdit={handleEdit}
                     onDelete={handleDelete}
                   />
