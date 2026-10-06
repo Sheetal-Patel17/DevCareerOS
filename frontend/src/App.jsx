@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Applications from "./pages/Applications";
 import CareerAnalytics from "./pages/CareerAnalytics";
+import DsaTracker from "./pages/DsaTracker";
 import Login from "./pages/Login";
 import Projects from "./pages/Projects";
 import Register from "./pages/Register";
@@ -59,6 +60,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Projects />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dsa"
+          element={
+            <ProtectedRoute>
+              <DsaTracker />
             </ProtectedRoute>
           }
         />
