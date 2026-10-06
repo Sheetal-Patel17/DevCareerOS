@@ -325,3 +325,37 @@
     padding: 18px;
   }
 }
+.analytics-overview,
+.analytics-summary-card,
+.analytics-mini-card,
+.analytics-basic-grid > div,
+.analytics-detail-grid > div {
+  min-width: 0;
+}
+
+.secondary-button {
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .career-analytics-header h1 {
+    font-size: 1.65rem;
+  }
+
+  .career-analytics-description {
+    font-size: 0.9rem;
+  }
+
+  .analytics-summary-card > strong {
+    font-size: 1.7rem;
+  }
+
+  .analytics-basic-grid strong,
+  .analytics-detail-grid strong {
+    font-size: 1.3rem;
+  }
+
+  .secondary-button {
+    width: 100%;
+  }
+}
