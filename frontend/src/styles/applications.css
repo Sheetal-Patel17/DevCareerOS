@@ -307,7 +307,11 @@
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 2000;
+  width: 100%;
+  min-height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 20px;
   display: grid;
   place-items: center;
@@ -449,5 +453,50 @@
 
   .application-modal {
     padding: 17px;
+  }
+}
+
+
+@media (max-width: 700px) {
+  .modal-backdrop {
+    padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+    place-items: start center;
+  }
+
+  .application-modal {
+    width: 100%;
+    max-height: calc(100dvh - 24px);
+    margin: 0;
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .modal-header {
+    position: sticky;
+    top: -16px;
+    z-index: 1;
+    padding: 2px 0 12px;
+    background: #ffffff;
+  }
+
+  .modal-actions {
+    position: sticky;
+    bottom: -16px;
+    z-index: 1;
+    margin: 18px -16px -16px;
+    padding: 12px 16px 16px;
+    background: #ffffff;
+  }
+
+  .modal-actions button {
+    flex: 1;
+    min-height: 44px;
+  }
+
+  .application-modal input,
+  .application-modal select,
+  .application-modal textarea {
+    min-height: 44px;
+    font-size: 16px;
   }
 }
