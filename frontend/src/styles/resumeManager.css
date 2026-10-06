@@ -303,7 +303,8 @@
 
 @media (max-width: 700px) {
   .resume-manager-page {
-    padding: 20px;
+    width: 100%;
+    padding: 18px 14px 28px;
   }
 
   .resume-manager-header {
@@ -380,5 +381,33 @@
 
   .resume-actions button {
     flex: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .resume-manager-header,
+  .resume-form,
+  .resume-card,
+  .resume-stat-card {
+    width: 100%;
+  }
+
+  .resume-form {
+    padding: 18px;
+  }
+
+  .resume-form-group input,
+  .resume-form-group select,
+  .resume-form-group textarea,
+  .resume-filters input,
+  .resume-filters select {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .resume-form-actions button,
+  .resume-actions button {
+    width: 100%;
+    min-height: 44px;
   }
 }
