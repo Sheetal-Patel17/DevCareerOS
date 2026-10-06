@@ -1,4 +1,5 @@
 import { BarChart3, BriefcaseBusiness, FolderKanban, Gauge, GraduationCap, LayoutDashboard, ListChecks, LogOut, MessageSquareText, Settings, Target, Trophy, UserRound, GitBranch } from "lucide-react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const navigationItems = [
@@ -13,9 +14,16 @@ const navigationItems = [
   { label: "Career Analytics", icon: BarChart3, path: "/analytics" },
 ];
 
-function Sidebar({ open, onClose }) {
+function Sidebar() {
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("devcareer_user") || "{}");
+
+  useEffect(() => {
+    const openMenu = () => setOpen(true);
+    window.addEventListener("devcareer:open-menu", openMenu);
+    return () => window.removeEventListener("devcareer:open-menu", openMenu);
+  }, []);
 
   function logout() {
     localStorage.removeItem("devcareer_token");
@@ -39,7 +47,7 @@ function Sidebar({ open, onClose }) {
               to={item.path}
               className={({ isActive }) => "nav-item" + (isActive ? " active" : "")}
               key={item.label}
-              onClick={onClose}
+              onClick={() => setOpen(false)}
             >
               <Icon size={18} /><span>{item.label}</span>
             </NavLink>
