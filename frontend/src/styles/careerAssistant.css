@@ -1,7 +1,7 @@
 .career-assistant-root {
   position: fixed;
   right: 24px;
-  bottom: 24px;
+  bottom: 96px;
   z-index: 1200;
   font-family: inherit;
 }
@@ -45,7 +45,7 @@
   display: flex;
   flex-direction: column;
   width: min(390px, calc(100vw - 32px));
-  height: min(590px, calc(100dvh - 112px));
+  height: min(590px, calc(100dvh - 184px));
   min-height: 360px;
   margin-bottom: 14px;
   overflow: hidden;
@@ -324,12 +324,12 @@
 @media (max-width: 520px) {
   .career-assistant-root {
     right: 14px;
-    bottom: max(14px, env(safe-area-inset-bottom));
+    bottom: max(84px, calc(env(safe-area-inset-bottom) + 72px));
   }
 
   .career-assistant-panel {
     width: calc(100vw - 28px);
-    height: min(72dvh, 620px);
+    height: min(68dvh, 620px);
     min-height: 340px;
     margin-bottom: 10px;
     border-radius: 18px;
