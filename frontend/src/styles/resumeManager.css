@@ -411,3 +411,101 @@
     min-height: 44px;
   }
 }
+
+/* Resume add/edit modal */
+.resume-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgba(15, 23, 42, 0.58);
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.resume-form.resume-form-modal {
+  width: min(980px, 100%);
+  max-height: calc(100dvh - 40px);
+  margin: 0;
+  padding: 24px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28);
+  scrollbar-gutter: stable;
+}
+
+.resume-modal-heading {
+  position: sticky;
+  top: -24px;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin: -2px 0 22px;
+  padding: 2px 0 14px;
+  background: #ffffff;
+}
+
+.resume-modal-heading h2 {
+  margin: 0 0 6px;
+}
+
+.resume-modal-heading p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.resume-form-modal .resume-form-actions {
+  position: sticky;
+  bottom: -24px;
+  z-index: 2;
+  margin: 22px -24px -24px;
+  padding: 14px 24px 24px;
+  background: #ffffff;
+  border-top: 1px solid #eef2f7;
+}
+
+@media (max-width: 700px) {
+  .resume-modal-backdrop {
+    align-items: center;
+    padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
+  }
+
+  .resume-form.resume-form-modal {
+    width: 100%;
+    max-height: calc(100dvh - 20px);
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .resume-modal-heading {
+    top: -18px;
+    margin: -1px 0 18px;
+    padding: 1px 0 12px;
+  }
+
+  .resume-form-modal .resume-form-actions {
+    bottom: -18px;
+    margin: 18px -18px -18px;
+    padding: 12px 18px 18px;
+    gap: 10px;
+  }
+
+  .resume-form-modal .resume-form-actions button {
+    min-height: 46px;
+    flex: 1;
+  }
+
+  .resume-form-modal .resume-form-group input,
+  .resume-form-modal .resume-form-group select,
+  .resume-form-modal .resume-form-group textarea {
+    font-size: 16px;
+  }
+}
