@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LockKeyhole, Mail } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../services/authService";
+import { loginUser, warmBackend } from "../services/authService";
 import "../styles/auth.css";
 
 function Login() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    void warmBackend();
+  }, []);
 
   const [form, setForm] = useState({
     email: "",

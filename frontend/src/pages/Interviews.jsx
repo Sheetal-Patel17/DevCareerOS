@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import "../styles/interviews.css";
+import DashboardBackButton from "../components/DashboardBackButton";
 import {
   getInterviews,
   getInterviewStats,
@@ -201,6 +202,7 @@ function Interviews() {
 
   return (
     <div className="interviews-page">
+      <DashboardBackButton />
       <div className="page-header">
         <div>
           <p className="page-eyebrow">Career Management</p>

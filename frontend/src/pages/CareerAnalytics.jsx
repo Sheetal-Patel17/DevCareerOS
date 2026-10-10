@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCareerAnalytics } from "../services/analyticsService";
 import "../styles/careerAnalytics.css";
+import DashboardBackButton from "../components/DashboardBackButton";
 
 function StatBar({ label, value, total, suffix = "" }) {
   const numericValue = Number(value || 0);
@@ -61,6 +62,7 @@ function CareerAnalytics() {
   if (loading) {
     return (
       <main className="career-analytics-page">
+        <DashboardBackButton />
         <div className="career-analytics-header">
           <div>
             <p className="career-analytics-eyebrow">Career Dashboard</p>
@@ -81,6 +83,7 @@ function CareerAnalytics() {
   if (error) {
     return (
       <main className="career-analytics-page">
+        <DashboardBackButton />
         <div className="career-analytics-header">
           <div>
             <p className="career-analytics-eyebrow">Career Dashboard</p>
@@ -109,6 +112,7 @@ function CareerAnalytics() {
   if (!analytics) {
     return (
       <main className="career-analytics-page">
+        <DashboardBackButton />
         <div className="career-analytics-header">
           <div>
             <p className="career-analytics-eyebrow">Career Dashboard</p>
@@ -151,6 +155,7 @@ function CareerAnalytics() {
 
   return (
     <main className="career-analytics-page">
+        <DashboardBackButton />
       <div className="career-analytics-header">
         <div>
           <p className="career-analytics-eyebrow">Career Dashboard</p>
