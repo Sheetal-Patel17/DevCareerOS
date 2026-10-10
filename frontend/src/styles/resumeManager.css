@@ -509,3 +509,60 @@
     font-size: 16px;
   }
 }
+
+
+/* Clear, consistently spaced resume search and status filters */
+.resume-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  align-items: end;
+  gap: 18px;
+  margin: 0 0 28px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.resume-filter-group {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resume-filter-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.resume-filter-group input,
+.resume-filter-group select {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  box-sizing: border-box;
+  padding: 11px 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #111827;
+  font: inherit;
+}
+
+.resume-filter-group input:focus,
+.resume-filter-group select:focus {
+  outline: 2px solid rgba(17, 24, 39, 0.15);
+  outline-offset: 1px;
+  border-color: #111827;
+}
+
+@media (max-width: 700px) {
+  .resume-filters {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 16px;
+  }
+}
