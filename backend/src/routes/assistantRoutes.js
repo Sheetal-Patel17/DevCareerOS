@@ -115,22 +115,45 @@ router.post("/chat", enforceUserRateLimit, async (req, res) => {
   }
 
   try {
-    const client = new OpenAI({ apiKey });
-    const response = await client.responses.create({
-      model: process.env.OPENAI_MODEL || "gpt-5-mini",
-      instructions: [
-        "You are Career AI Assistant, a helpful and encouraging assistant inside DevCareerOS.",
-        "Help with resumes, professional bios, LinkedIn summaries, job applications, interview practice, career planning, skills, projects, and explaining how to use the app.",
-        "Give practical, clearly formatted answers. For writing requests, provide a polished draft the user can copy and edit.",
-        "Use beginner-friendly explanations when useful. Do not claim to have viewed or changed a user's account data unless it is explicitly included in the conversation.",
-        "Do not ask for passwords, API keys, or other secrets. Never claim to guarantee a job or interview outcome.",
-        "The user's current DevCareerOS page is: " + pageContext + ". Use this context only when it helps answer the question.",
-      ].join("\n"),
-      input: messages,
-      max_output_tokens: 700,
+    const instructions = [
+      "You are Career AI Assistant, a helpful and encouraging assistant inside DevCareerOS.",
+      "Help with resumes, professional bios, LinkedIn summaries, job applications, interview practice, career planning, skills, projects, and explaining how to use the app.",
+      "Give practical, clearly formatted answers. For writing requests, provide a polished draft the user can copy and edit.",
+      "Use beginner-friendly explanations when useful. Do not claim to have viewed or changed a user's account data unless it is explicitly included in the conversation.",
+      "Do not ask for passwords, API keys, or other secrets. Never claim to guarantee a job or interview outcome.",
+      "The user's current DevCareerOS page is: " + pageContext + ". Use this context only when it helps answer the question.",
+    ].join("\\n");
+
+    const apiResponse = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: process.env.OPENAI_MODEL || "gpt-5-mini",
+        instructions,
+        input: messages,
+        max_output_tokens: 700,
+      }),
+      signal: AbortSignal.timeout(45000),
     });
 
-    const reply = response.output_text?.trim();
+    const response = await apiResponse.json().catch(() => ({}));
+
+    if (!apiResponse.ok) {
+      const apiError = new Error(response.error?.message || "OpenAI request failed");
+      apiError.status = apiResponse.status;
+      apiError.code = response.error?.code;
+      throw apiError;
+    }
+
+    const reply = (response.output || [])
+      .flatMap((item) => Array.isArray(item.content) ? item.content : [])
+      .filter((item) => item.type === "output_text" && typeof item.text === "string")
+      .map((item) => item.text)
+      .join("\\n")
+      .trim();
 
     if (!reply) {
       return res.status(502).json({
