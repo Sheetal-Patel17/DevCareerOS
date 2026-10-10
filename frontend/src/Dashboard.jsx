@@ -7,33 +7,85 @@ import { getProjects } from "./services/projectService";
 import { getDsaStats } from "./services/dsaService";
 import { getGoals } from "./services/goalService";
 
+function getTimeGreeting() {
+  const hour = new Date().getHours();
+
+  if (hour < 12) return "Good morning";
+  if (hour < 17) return "Good afternoon";
+  return "Good evening";
+}
+
 function Dashboard() {
-  const user = JSON.parse(localStorage.getItem("devcareer_user") || "{}");
-  const [stats, setStats] = useState({ applications: 0, interviews: 0, projects: 0, skills: 0, dsa: 0, goals: 0 });
+  let user = {};
+  try {
+    user = JSON.parse(localStorage.getItem("devcareer_user") || "{}");
+  } catch {
+    user = {};
+  }
+
+  const greeting = getTimeGreeting();
+  const [stats, setStats] = useState({
+    applications: 0,
+    interviews: 0,
+    projects: 0,
+    skills: 0,
+    dsa: 0,
+    goals: 0,
+  });
   const [recentApplications, setRecentApplications] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
-      getApplications(),
-      getSkills(),
-      getProjects(),
-      getDsaStats(),
-      getGoals(),
-    ]).then(([apps, skills, projects, dsa, goals]) => {
-      const applications = apps.applications || [];
-      setStats({
-        applications: applications.length,
-        interviews: applications.filter((item) => item.status === "Interview").length,
-        projects: (projects.projects || []).length,
-        skills: (skills.skills || []).length,
-        dsa: dsa.stats?.solved ?? 0,
-        goals: (goals.goals || []).length,
-      });
-      setRecentApplications(applications.slice(0, 5));
-    }).catch((error) => {
-      console.error("Dashboard loading error:", error);
-    }).finally(() => setLoading(false));
+    let active = true;
+
+    // Update each card as soon as its own request finishes rather than
+    // holding all dashboard data until the slowest request completes.
+    const tasks = [
+      getApplications()
+        .then((data) => {
+          if (!active) return;
+          const applications = data.applications || [];
+          setStats((current) => ({
+            ...current,
+            applications: applications.length,
+            interviews: applications.filter((item) => item.status === "Interview").length,
+          }));
+          setRecentApplications(applications.slice(0, 5));
+        })
+        .catch((error) => console.error("Applications dashboard load error:", error)),
+
+      getSkills()
+        .then((data) => {
+          if (active) setStats((current) => ({ ...current, skills: (data.skills || []).length }));
+        })
+        .catch((error) => console.error("Skills dashboard load error:", error)),
+
+      getProjects()
+        .then((data) => {
+          if (active) setStats((current) => ({ ...current, projects: (data.projects || []).length }));
+        })
+        .catch((error) => console.error("Projects dashboard load error:", error)),
+
+      getDsaStats()
+        .then((data) => {
+          if (active) setStats((current) => ({ ...current, dsa: data.stats?.solved ?? 0 }));
+        })
+        .catch((error) => console.error("DSA dashboard load error:", error)),
+
+      getGoals()
+        .then((data) => {
+          if (active) setStats((current) => ({ ...current, goals: (data.goals || []).length }));
+        })
+        .catch((error) => console.error("Goals dashboard load error:", error)),
+    ];
+
+    Promise.allSettled(tasks).finally(() => {
+      if (active) setLoading(false);
+    });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   return (
@@ -43,7 +95,7 @@ function Dashboard() {
         <Topbar />
         <div className="dashboard-content">
           <section className="page-heading">
-            <h1>Good morning, {user.name || "there"}!</h1>
+            <h1>{greeting}, {user.name || "there"}!</h1>
             <p>Your career workspace, personalized for your account.</p>
           </section>
 
@@ -57,7 +109,7 @@ function Dashboard() {
               <article className="stat-card" key={label}>
                 <div className="stat-card-header"><span>{label}</span></div>
                 <strong>{value}</strong>
-                <p>{loading ? "Loading..." : "Your account data"}</p>
+                <p>{loading ? "Loading your data…" : "Your account data"}</p>
               </article>
             ))}
           </section>
@@ -84,7 +136,10 @@ function Dashboard() {
               <div><h2>Recent Applications</h2><p>Only applications belonging to your account.</p></div>
             </div>
             {recentApplications.length === 0 ? (
-              <div className="empty-applications"><h3>No applications yet</h3><p>Create your first application to see it here.</p></div>
+              <div className="empty-applications">
+                <h3>{loading ? "Loading applications…" : "No applications yet"}</h3>
+                <p>{loading ? "Your workspace will update as data arrives." : "Create your first application to see it here."}</p>
+              </div>
             ) : (
               <div className="table-wrapper">
                 <table className="application-table">
@@ -92,7 +147,9 @@ function Dashboard() {
                   <tbody>
                     {recentApplications.map((item) => (
                       <tr key={item._id}>
-                        <td>{item.company}</td><td>{item.role}</td><td>{item.status}</td>
+                        <td>{item.company}</td>
+                        <td>{item.role}</td>
+                        <td>{item.status}</td>
                         <td>{item.dateApplied ? new Date(item.dateApplied).toLocaleDateString() : "-"}</td>
                       </tr>
                     ))}
