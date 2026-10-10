@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import CareerAssistant from "./components/CareerAssistant";
 
 import Dashboard from "./Dashboard";
 
@@ -31,6 +32,7 @@ function ProtectedRoute({ children }) {
 function App() {
   return (
     <BrowserRouter>
+      <CareerAssistant />
       <Routes>
         <Route
           path="/"
