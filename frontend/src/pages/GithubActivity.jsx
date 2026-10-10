@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getProfile } from "../services/profileService";
 import { getGithubActivity } from "../services/githubActivityService";
 import "../styles/githubActivity.css";
+import DashboardBackButton from "../components/DashboardBackButton";
 
 const getGithubUsername = (githubUrl) => {
   if (!githubUrl) {
@@ -95,6 +96,7 @@ function GithubActivity() {
   if (loading) {
     return (
       <main className="github-page">
+        <DashboardBackButton />
         <div className="github-header">
           <p className="github-eyebrow">Developer Activity</p>
 
@@ -114,6 +116,7 @@ function GithubActivity() {
 
   return (
     <main className="github-page">
+        <DashboardBackButton />
       <div className="github-header">
         <div>
           <p className="github-eyebrow">Developer Activity</p>
