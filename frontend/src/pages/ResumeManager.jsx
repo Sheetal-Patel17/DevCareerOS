@@ -526,38 +526,35 @@ return ( <div className="app-shell">
   </div>
 
   {!loading && resumes.length > 0 && (
-    <div className="resume-filters">
-      <input
-        type="text"
-        placeholder="Search title, role, or version..."
-        value={searchTerm}
-        onChange={(event) =>
-          setSearchTerm(event.target.value)
-        }
-      />
+    <div className="resume-filters" aria-label="Filter resumes">
+      <div className="resume-filter-group resume-search-group">
+        <label htmlFor="resume-search">Search resumes</label>
+        <input
+          id="resume-search"
+          type="search"
+          placeholder="Search by title, target role, or version"
+          value={searchTerm}
+          onChange={(event) =>
+            setSearchTerm(event.target.value)
+          }
+        />
+      </div>
 
-      <select
-        value={statusFilter}
-        onChange={(event) =>
-          setStatusFilter(event.target.value)
-        }
-      >
-        <option value="All">
-          All Statuses
-        </option>
-
-        <option value="Draft">
-          Draft
-        </option>
-
-        <option value="Ready">
-          Ready
-        </option>
-
-        <option value="Archived">
-          Archived
-        </option>
-      </select>
+      <div className="resume-filter-group resume-status-filter">
+        <label htmlFor="resume-status-filter">Filter by status</label>
+        <select
+          id="resume-status-filter"
+          value={statusFilter}
+          onChange={(event) =>
+            setStatusFilter(event.target.value)
+          }
+        >
+          <option value="All">All statuses</option>
+          <option value="Draft">Draft</option>
+          <option value="Ready">Ready</option>
+          <option value="Archived">Archived</option>
+        </select>
+      </div>
     </div>
   )}
 
