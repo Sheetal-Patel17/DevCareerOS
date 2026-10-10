@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { X } from "lucide-react";
 import "../styles/goals.css";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
@@ -354,23 +355,40 @@ function Goals() {
       </div>
 
       {showForm && (
-        <form
-          className="goal-form"
-          onSubmit={handleSubmit}
+        <div
+          className="goal-modal-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget && !saving) closeForm();
+          }}
         >
-          <div className="goal-form-header">
-            <h2>
-              {editingId
-                ? "Edit Goal"
-                : "Create Goal"}
-            </h2>
-
-            <p>
-              {editingId
-                ? "Update your goal and its milestones."
-                : "Add a new objective to your career plan."}
-            </p>
-          </div>
+          <form
+            className="goal-form goal-form-modal"
+            onSubmit={handleSubmit}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="goal-modal-title"
+          >
+            <div className="goal-form-header goal-modal-heading">
+              <div>
+                <h2 id="goal-modal-title">
+                  {editingId ? "Edit Goal" : "Create Goal"}
+                </h2>
+                <p>
+                  {editingId
+                    ? "Update your goal and its milestones."
+                    : "Add a new objective to your career plan."}
+                </p>
+              </div>
+              <button
+                type="button"
+                className="goal-modal-close"
+                onClick={closeForm}
+                disabled={saving}
+                aria-label="Close goal form"
+              >
+                <X size={20} />
+              </button>
+            </div>
 
           <div className="goal-form-grid">
             <div className="goal-form-group full-width">
@@ -619,8 +637,9 @@ function Goals() {
                 ? "Update Goal"
                 : "Save Goal"}
             </button>
-          </div>
-        </form>
+            </div>
+          </form>
+        </div>
       )}
 
       <div className="goals-list-header">
