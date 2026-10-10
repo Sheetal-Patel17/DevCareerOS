@@ -1,6 +1,7 @@
 .profile-settings-page {
   width: 100%;
-  padding: 28px;
+  box-sizing: border-box;
+  padding: 28px 28px 96px;
 }
 
 .profile-settings-header {
@@ -129,7 +130,8 @@
 
 .profile-form-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  padding-bottom: 8px;
 }
 
 .primary-button {
@@ -160,7 +162,7 @@
 
 @media (max-width: 700px) {
   .profile-settings-page {
-    padding: 20px;
+    padding: 20px 20px 104px;
   }
 
   .profile-settings-header h1 {
@@ -175,7 +177,13 @@
     grid-column: auto;
   }
 
+  .profile-form-actions {
+    justify-content: flex-start;
+  }
+
   .profile-form-actions .primary-button {
-    width: 100%;
+    width: auto;
+    min-width: 160px;
+    max-width: 100%;
   }
 }
