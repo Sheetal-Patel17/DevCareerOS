@@ -59,14 +59,34 @@ router.post("/chat", enforceUserRateLimit, async (req, res) => {
   }
 
   const incomingMessages = req.body?.messages;
-  const pageContext = typeof req.body?.pageContext === "string"
-    ? req.body.pageContext.slice(0, 100)
+  const allowedPageContexts = new Set([
+    "Dashboard", "Job Applications", "Skills & Learning", "Projects",
+    "DSA Tracker", "Interview Preparation", "Goal Tracker", "Resume Manager",
+    "Career Analytics", "GitHub Activity", "Profile & Settings", "DevCareerOS",
+  ]);
+  const requestedPageContext = req.body?.pageContext;
+  const pageContext = allowedPageContexts.has(requestedPageContext)
+    ? requestedPageContext
     : "DevCareerOS";
 
   if (!Array.isArray(incomingMessages) || incomingMessages.length === 0) {
     return res.status(400).json({
       success: false,
       message: "Please enter a message to start chatting.",
+    });
+  }
+
+  const latestMessage = incomingMessages[incomingMessages.length - 1];
+  if (
+    !latestMessage ||
+    latestMessage.role !== "user" ||
+    typeof latestMessage.content !== "string" ||
+    !latestMessage.content.trim() ||
+    latestMessage.content.trim().length > MAX_MESSAGE_LENGTH
+  ) {
+    return res.status(400).json({
+      success: false,
+      message: "Please send a message under 2,000 characters.",
     });
   }
 
