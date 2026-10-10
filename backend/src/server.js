@@ -16,6 +16,7 @@ const githubActivityRoutes = require("./routes/githubActivityRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
 const skillRoutes = require("./routes/skillRoutes");
 const projectRoutes = require("./routes/projectRoutes");
+const assistantRoutes = require("./routes/assistantRoutes");
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use("/api/github-activity", githubActivityRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/assistant", assistantRoutes);
 
 async function startServer() {
   try {
