@@ -1,7 +1,7 @@
 .career-assistant-root {
   position: fixed;
   right: 24px;
-  bottom: 96px;
+  bottom: 156px;
   z-index: 1200;
   font-family: inherit;
 }
@@ -45,7 +45,7 @@
   display: flex;
   flex-direction: column;
   width: min(390px, calc(100vw - 32px));
-  height: min(590px, calc(100dvh - 184px));
+  height: min(590px, calc(100dvh - 244px));
   min-height: 360px;
   margin-bottom: 14px;
   overflow: hidden;
