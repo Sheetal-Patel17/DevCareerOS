@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LockKeyhole, Mail, UserRound } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "../services/authService";
+import { registerUser, warmBackend } from "../services/authService";
 import "../styles/auth.css";
 
 function Register() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    void warmBackend();
+  }, []);
 
   const [form, setForm] = useState({
     name: "",
