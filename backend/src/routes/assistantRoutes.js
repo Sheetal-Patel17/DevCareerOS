@@ -122,7 +122,7 @@ router.post("/chat", enforceUserRateLimit, async (req, res) => {
       "Use beginner-friendly explanations when useful. Do not claim to have viewed or changed a user's account data unless it is explicitly included in the conversation.",
       "Do not ask for passwords, API keys, or other secrets. Never claim to guarantee a job or interview outcome.",
       "The user's current DevCareerOS page is: " + pageContext + ". Use this context only when it helps answer the question.",
-    ].join("\\n");
+    ].join("\n");
 
     const apiResponse = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
@@ -152,7 +152,7 @@ router.post("/chat", enforceUserRateLimit, async (req, res) => {
       .flatMap((item) => Array.isArray(item.content) ? item.content : [])
       .filter((item) => item.type === "output_text" && typeof item.text === "string")
       .map((item) => item.text)
-      .join("\\n")
+      .join("\n")
       .trim();
 
     if (!reply) {
