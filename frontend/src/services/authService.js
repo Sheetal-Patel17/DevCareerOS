@@ -1,11 +1,26 @@
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
+// Start waking a sleeping backend as soon as the login/register page opens.
+// This runs in the background and never blocks the page.
+export function warmBackend() {
+  return fetch(`${API_BASE_URL}/health`, {
+    method: "GET",
+    cache: "no-store",
+  }).catch(() => null);
+}
+
 async function parseResponse(response) {
-  const data = await response.json();
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch {
+    data = {};
+  }
 
   if (!response.ok) {
-    throw new Error(data.message || "Request failed");
+    throw new Error(data.message || "Request failed. Please try again.");
   }
 
   return data;
