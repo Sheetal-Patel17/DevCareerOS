@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { X } from "lucide-react";
 import "../styles/resumeManager.css";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
@@ -322,25 +323,40 @@ return ( <div className="app-shell">
   </div>
 
   {showForm && (
-    <form
-      className="resume-form"
-      onSubmit={handleSubmit}
+    <div
+      className="resume-modal-backdrop"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget && !saving) closeForm();
+      }}
     >
-      <div className="resume-form-header">
-        <div>
-          <h2>
-            {editingId
-              ? "Edit Resume"
-              : "Create Resume"}
-          </h2>
-
-          <p>
-            {editingId
-              ? "Update your resume information."
-              : "Create a new resume version."}
-          </p>
+      <form
+        className="resume-form resume-form-modal"
+        onSubmit={handleSubmit}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="resume-modal-title"
+      >
+        <div className="resume-form-header resume-modal-heading">
+          <div>
+            <h2 id="resume-modal-title">
+              {editingId ? "Edit Resume" : "Create Resume"}
+            </h2>
+            <p>
+              {editingId
+                ? "Update your resume information."
+                : "Create a new resume version."}
+            </p>
+          </div>
+          <button
+            type="button"
+            className="resume-modal-close"
+            onClick={closeForm}
+            disabled={saving}
+            aria-label="Close resume form"
+          >
+            <X size={20} />
+          </button>
         </div>
-      </div>
 
       <div className="resume-form-grid">
         <div className="resume-form-group">
@@ -495,7 +511,8 @@ return ( <div className="app-shell">
             : "Save Resume"}
         </button>
       </div>
-    </form>
+      </form>
+    </div>
   )}
 
   <div className="resume-list-header">
