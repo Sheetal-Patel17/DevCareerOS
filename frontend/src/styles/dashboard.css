@@ -1104,3 +1104,40 @@
     transition: none !important;
   }
 }
+
+
+/* Functional topbar search and quick-action popovers. */
+.topbar { overflow: visible; }
+.topbar-search-wrap, .topbar-popover-anchor { position: relative; }
+.topbar-search-wrap { width: min(540px,100%); flex: 1 1 420px; min-width: 0; }
+.topbar-search-wrap .search-box { width: 100%; }
+.search-shortcut { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 3px; padding: 4px 7px; border: 1px solid #e3e6eb; border-radius: 6px; background: #fff; color: #7c8797; font-size: 11px; white-space: nowrap; }
+.workspace-search-results, .topbar-popover { position: absolute; z-index: 1400; top: calc(100% + 12px); border: 1px solid #e7e2d8; border-radius: 16px; background: #fff; box-shadow: 0 18px 48px rgba(16,24,39,.16); color: #172033; }
+.workspace-search-results { left: 0; width: min(100%,540px); min-width: min(300px,calc(100vw - 32px)); padding: 8px; }
+.workspace-search-result { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; border: 0; border-radius: 10px; background: transparent; color: #172033; text-align: left; cursor: pointer; }
+.workspace-search-result:hover, .workspace-search-result:focus-visible { outline: none; background: #f8f5ee; }
+.workspace-search-result-copy { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+.workspace-search-result-copy strong { font-size: 13px; font-weight: 700; }
+.workspace-search-result-copy small { color: #7b8493; font-size: 11px; }
+.workspace-search-empty { margin: 0; padding: 14px 12px; color: #687386; font-size: 12px; line-height: 1.5; }
+.workspace-search-hint { margin: 4px 8px 2px; padding-top: 9px; border-top: 1px solid #f0eee9; color: #9299a5; font-size: 10px; }
+.topbar-popover { right: 0; width: min(340px,calc(100vw - 28px)); padding: 16px; }
+.topbar-popover-heading { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.topbar-popover-heading > div { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 4px; }
+.topbar-popover-heading strong { color: #172033; font-size: 13px; }
+.topbar-popover-heading small { color: #8a93a2; font-size: 11px; }
+.topbar-popover-icon { display: grid; flex: 0 0 36px; place-items: center; width: 36px; height: 36px; border: 1px solid #eee4ce; border-radius: 11px; background: #fbf6eb; color: #98743b; }
+.topbar-popover-note { margin: 14px 0 10px; color: #6e7888; font-size: 12px; line-height: 1.5; }
+.topbar-popover-link { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 12px; margin-top: 5px; padding: 12px 10px; border: 1px solid transparent; border-radius: 11px; background: transparent; color: #172033; text-align: left; cursor: pointer; }
+.topbar-popover-link:hover, .topbar-popover-link:focus-visible { outline: none; border-color: #eee5d3; background: #fbf8f1; }
+.topbar-popover-link > span { display: flex; flex-direction: column; gap: 4px; }
+.topbar-popover-link strong { font-size: 12px; }
+.topbar-popover-link small { color: #7b8493; font-size: 11px; }
+.notification-count { padding: 5px 8px; border-radius: 999px; background: #f4f5f7; color: #7b8493; font-size: 10px; white-space: nowrap; }
+.topbar-notifications-empty { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 23px 12px 16px; text-align: center; }
+.topbar-notifications-check { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #edf8f0; color: #27834e; font-size: 18px; font-weight: 700; }
+.topbar-notifications-empty strong { color: #273449; font-size: 13px; }
+.topbar-notifications-empty p { max-width: 230px; margin: 0; color: #7b8493; font-size: 11px; line-height: 1.5; }
+.topbar-actions .icon-button.is-active { border-color: #d7c398; background: #fbf7ee; color: #98743b; }
+@media (max-width: 800px) { .topbar-search-wrap { flex-basis: auto; width: 100%; } .search-shortcut { display: none; } .workspace-search-results { width: min(420px,calc(100vw - 32px)); } .topbar-popover { right: -4px; } }
+@media (max-width: 520px) { .topbar-search-wrap .search-box { gap: 7px; padding: 0 10px; } .topbar-search-wrap .search-box input { min-width: 0; font-size: 12px; } .topbar-search-wrap .search-box input::placeholder { text-overflow: ellipsis; } .topbar-popover { position: fixed; top: 70px; right: 12px; width: min(340px,calc(100vw - 24px)); } .workspace-search-results { position: fixed; top: 70px; left: 12px; width: calc(100vw - 24px); min-width: 0; } }
