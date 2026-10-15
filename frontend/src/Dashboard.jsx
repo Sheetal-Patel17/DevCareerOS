@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import Sidebar from "./components/Sidebar";
-import Topbar from "./components/Topbar";
 import { getApplications } from "./services/applicationService";
 import { getSkills } from "./services/skillService";
 import { getProjects } from "./services/projectService";
@@ -89,11 +87,7 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="app-shell">
-      <Sidebar />
-      <main className="main-area">
-        <Topbar />
-        <div className="dashboard-content">
+    <div className="dashboard-content">
           <section className="page-heading">
             <h1>{greeting}, {user.name || "there"}!</h1>
             <p>Your career workspace, personalized for your account.</p>
@@ -158,8 +152,6 @@ function Dashboard() {
               </div>
             )}
           </section>
-        </div>
-      </main>
     </div>
   );
 }
