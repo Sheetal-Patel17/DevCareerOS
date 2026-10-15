@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import "../styles/goals.css";
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
 import {
   getGoals,
   getGoalStats,
@@ -291,11 +289,7 @@ function Goals() {
   });
 
   return (
-    <div className="app-shell">
-      <Sidebar />
-      <main className="main-area">
-        <Topbar />
-        <div className="goals-page">
+    <div className="goals-page">
       <div className="goals-header">
         <div>
           <p className="goals-eyebrow">Career Planning</p>
@@ -892,8 +886,6 @@ function Goals() {
           <h2>Loading goals...</h2>
         </div>
       )}
-        </div>
-      </main>
     </div>
   );
 }
