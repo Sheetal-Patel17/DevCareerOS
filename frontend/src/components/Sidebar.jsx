@@ -22,8 +22,15 @@ function Sidebar() {
 
   useEffect(() => {
     const openMenu = () => setOpen(true);
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setOpen(false);
+    };
     window.addEventListener("devcareer:open-menu", openMenu);
-    return () => window.removeEventListener("devcareer:open-menu", openMenu);
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      window.removeEventListener("devcareer:open-menu", openMenu);
+      window.removeEventListener("keydown", closeOnEscape);
+    };
   }, []);
 
   function logout() {
@@ -33,11 +40,26 @@ function Sidebar() {
   }
 
   return (
-    <aside className={"sidebar" + (open ? " sidebar-open" : "")}>
-      <div className="brand">
+    <>
+      {open && (
+        <button
+          type="button"
+          className="sidebar-backdrop"
+          aria-label="Close navigation menu"
+          onClick={() => setOpen(false)}
+        />
+      )}
+      <aside className={"sidebar" + (open ? " sidebar-open" : "")}>
+      <NavLink
+        to="/"
+        className="brand"
+        aria-label="Go to Dashboard home"
+        title="Go to Dashboard"
+        onClick={() => setOpen(false)}
+      >
         <div className="brand-mark"><Gauge size={20} /></div>
         <div><h2>DevCareerOS</h2><span>Career Command Center</span></div>
-      </div>
+      </NavLink>
 
       <nav className="sidebar-nav" aria-label="Main navigation">
         <p className="nav-section-title">Workspace</p>
@@ -76,7 +98,8 @@ function Sidebar() {
           <LogOut size={17} /><span>Log out</span>
         </button>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }
 

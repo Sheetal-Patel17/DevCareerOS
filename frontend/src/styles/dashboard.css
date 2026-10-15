@@ -934,3 +934,173 @@
     flex: 1;
   }
 }
+
+
+/* Shared premium workspace shell — used by every authenticated route. */
+.app-shell {
+  background: #f4f6f9;
+  color: #172033;
+}
+
+.career-route-content {
+  min-width: 0;
+  min-height: calc(100vh - 72px);
+}
+
+.sidebar {
+  background: linear-gradient(180deg, #101827 0%, #0a1220 100%);
+  border-right: 1px solid rgba(207, 177, 119, 0.22);
+  box-shadow: 8px 0 28px rgba(10, 18, 32, 0.08);
+}
+
+.brand {
+  color: #f8fafc;
+  text-decoration: none;
+  border-radius: 14px;
+}
+
+.brand:focus-visible {
+  outline: 2px solid #d7bd86;
+  outline-offset: 3px;
+}
+
+.brand-mark {
+  background: linear-gradient(135deg, #c6a46a 0%, #e9d7ad 100%);
+  color: #101827;
+  box-shadow: 0 5px 16px rgba(198, 164, 106, 0.22);
+}
+
+.brand h2 {
+  color: #fffaf0;
+  letter-spacing: -0.035em;
+}
+
+.brand span {
+  color: #aab5c5;
+}
+
+.nav-section-title {
+  color: #9ba8bb;
+}
+
+.nav-item {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.075);
+  border-color: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #d8bd84 0%, #c7a66b 100%);
+  border-color: rgba(250, 232, 188, 0.8);
+  color: #131d2b;
+  box-shadow: 0 7px 20px rgba(199, 166, 107, 0.16);
+}
+
+.nav-item.active svg {
+  color: #131d2b;
+}
+
+.sidebar-bottom {
+  border-top-color: rgba(226, 232, 240, 0.13);
+}
+
+.profile-mini {
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.profile-avatar {
+  background: #d4b77c;
+  color: #101827;
+}
+
+.logout-button {
+  border-color: rgba(226, 232, 240, 0.15);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.logout-button:hover,
+.logout-button:focus-visible {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(215, 189, 134, 0.42);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom-color: #e7e2d8;
+  box-shadow: 0 6px 22px rgba(19, 29, 43, 0.035);
+  backdrop-filter: blur(16px);
+}
+
+.search-box {
+  border-color: #e8e2d7;
+  background: #faf9f6;
+}
+
+.search-box:focus-within {
+  border-color: #c7a66b;
+  box-shadow: 0 0 0 3px rgba(199, 166, 107, 0.12);
+}
+
+.search-box input:focus {
+  outline: none;
+}
+
+.icon-button,
+.mobile-menu-button {
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+
+.icon-button:hover,
+.mobile-menu-button:hover {
+  border-color: #d6c294;
+  background: #fbf7ee;
+  color: #172033;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: rgba(7, 13, 23, 0.58);
+    backdrop-filter: blur(3px);
+    touch-action: manipulation;
+  }
+
+  .sidebar {
+    z-index: 1000;
+  }
+
+  .career-route-content {
+    min-height: calc(100vh - 62px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-item,
+  .icon-button,
+  .mobile-menu-button,
+  .sidebar {
+    transition: none !important;
+  }
+}

@@ -1,7 +1,5 @@
 import { FolderKanban, Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
 import ProjectStats from "../components/projects/ProjectStats";
 import ProjectFilters from "../components/projects/ProjectFilters";
 import ProjectCard from "../components/projects/ProjectCard";
@@ -73,13 +71,8 @@ function Projects() {
   }
 
   return (
-    <div className="app-shell">
-      <Sidebar />
-
-      <main className="main-area">
-        <Topbar />
-
-        <div className="dashboard-content">
+    <>
+      <div className="dashboard-content">
           <section className="projects-header">
             <div className="page-heading">
               <div className="page-heading-with-icon">
@@ -146,8 +139,7 @@ function Projects() {
               </div>
             )}
           </section>
-        </div>
-      </main>
+      </div>
 
       {showForm && (
         <ProjectForm
@@ -156,7 +148,7 @@ function Projects() {
           onSave={handleSave}
         />
       )}
-    </div>
+    </>
   );
 }
 

@@ -1,7 +1,5 @@
 import { Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
 import ApplicationStats from "../components/applications/ApplicationStats";
 import ApplicationFilters from "../components/applications/ApplicationFilters";
 import ApplicationCard from "../components/applications/ApplicationCard";
@@ -72,13 +70,8 @@ function Applications() {
   }
 
   return (
-    <div className="app-shell">
-      <Sidebar />
-
-      <main className="main-area">
-        <Topbar />
-
-        <div className="dashboard-content">
+    <>
+      <div className="dashboard-content">
           <section className="applications-header">
             <div className="page-heading">
               <h1>Job Applications</h1>
@@ -138,8 +131,7 @@ function Applications() {
               </div>
             )}
           </section>
-        </div>
-      </main>
+      </div>
 
       {showForm && (
         <ApplicationForm
@@ -148,7 +140,7 @@ function Applications() {
           onSave={handleSave}
         />
       )}
-    </div>
+    </>
   );
 }
 

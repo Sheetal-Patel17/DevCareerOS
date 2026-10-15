@@ -60,7 +60,7 @@ function CareerAnalytics() {
 
   if (loading) {
     return (
-      <main className="career-analytics-page">
+      <div className="career-analytics-page">
 
         <div className="career-analytics-header">
           <div>
@@ -75,13 +75,13 @@ function CareerAnalytics() {
         <div className="analytics-state-card">
           <p>Loading your career analytics...</p>
         </div>
-      </main>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <main className="career-analytics-page">
+      <div className="career-analytics-page">
 
         <div className="career-analytics-header">
           <div>
@@ -104,13 +104,13 @@ function CareerAnalytics() {
             Try Again
           </button>
         </div>
-      </main>
+      </div>
     );
   }
 
   if (!analytics) {
     return (
-      <main className="career-analytics-page">
+      <div className="career-analytics-page">
 
         <div className="career-analytics-header">
           <div>
@@ -133,7 +133,7 @@ function CareerAnalytics() {
             Refresh
           </button>
         </div>
-      </main>
+      </div>
     );
   }
 
@@ -153,7 +153,7 @@ function CareerAnalytics() {
   );
 
   return (
-    <main className="career-analytics-page">
+    <div className="career-analytics-page">
 
       <div className="career-analytics-header">
         <div>
@@ -556,7 +556,7 @@ function CareerAnalytics() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

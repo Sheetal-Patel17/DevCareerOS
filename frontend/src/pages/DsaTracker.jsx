@@ -220,7 +220,7 @@ function DsaTracker() {
 
   if (loading) {
     return (
-      <main className="dsa-page">
+      <div className="dsa-page">
 
         <div className="dsa-header">
           <p className="dsa-eyebrow">Practice Tracker</p>
@@ -233,12 +233,12 @@ function DsaTracker() {
         <div className="dsa-state-card">
           <p>Loading your DSA tracker...</p>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="dsa-page">
+    <div className="dsa-page">
 
       <div className="dsa-header">
         <div>
@@ -672,7 +672,7 @@ function DsaTracker() {
           </div>
         )}
       </section>
-    </main>
+    </div>
   );
 }
 

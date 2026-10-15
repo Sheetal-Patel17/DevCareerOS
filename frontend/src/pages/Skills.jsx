@@ -1,7 +1,5 @@
 import { Plus, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
 import SkillStats from "../components/skills/SkillStats";
 import SkillFilters from "../components/skills/SkillFilters";
 import SkillCard from "../components/skills/SkillCard";
@@ -72,13 +70,8 @@ function Skills() {
   }
 
   return (
-    <div className="app-shell">
-      <Sidebar />
-
-      <main className="main-area">
-        <Topbar />
-
-        <div className="dashboard-content">
+    <>
+      <div className="dashboard-content">
           <section className="skills-header">
             <div className="page-heading">
               <div className="page-heading-with-icon">
@@ -148,8 +141,7 @@ function Skills() {
               </div>
             )}
           </section>
-        </div>
-      </main>
+      </div>
 
       {showForm && (
         <SkillForm
@@ -158,7 +150,7 @@ function Skills() {
           onSave={handleSave}
         />
       )}
-    </div>
+    </>
   );
 }
 
