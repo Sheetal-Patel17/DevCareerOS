@@ -94,7 +94,7 @@ function GithubActivity() {
 
   if (loading) {
     return (
-      <main className="github-page">
+      <div className="github-page">
 
         <div className="github-header">
           <p className="github-eyebrow">Developer Activity</p>
@@ -109,12 +109,12 @@ function GithubActivity() {
         <div className="github-state-card">
           <p>Loading GitHub activity...</p>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="github-page">
+    <div className="github-page">
 
       <div className="github-header">
         <div>
@@ -453,7 +453,7 @@ function GithubActivity() {
           </section>
         </>
       )}
-    </main>
+    </div>
   );
 }
 
