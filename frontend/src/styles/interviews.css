@@ -310,7 +310,7 @@
 /* Refined interview tracker: breathing room, hierarchy, and clear filters. */
 .interviews-page { max-width: 1440px; margin: 0 auto; padding: 32px clamp(20px, 3vw, 40px) 48px; color: #172033; }
 .interviews-page .page-header { align-items: center; padding: 4px 0 8px; margin-bottom: 30px; }
-.interviews-page .page-eyebrow { color: #a07b3f; opacity: 1; font-size: 11px; letter-spacing: .14em; }
+.interviews-page .page-eyebrow { color: #596579; opacity: .78; font-size: 12px; letter-spacing: .08em; }
 .interviews-page .page-header h1 { letter-spacing: -.045em; font-size: clamp(28px, 3vw, 36px); }
 .interviews-page .page-description { color: #6b7280; opacity: 1; }
 .interviews-page .primary-button { border: 1px solid #172033; border-radius: 12px; padding: 13px 19px; background: linear-gradient(135deg, #172033, #26364e); box-shadow: 0 8px 18px rgba(23,32,51,.12); white-space: nowrap; }
