@@ -49,9 +49,9 @@ function App() {
         <Route path="/interviews" element={<ProtectedRoute><SharedCareerLayout><Interviews /></SharedCareerLayout></ProtectedRoute>} />
         <Route path="/goals" element={<ProtectedRoute><Goals /></ProtectedRoute>} />
         <Route path="/resumes" element={<ProtectedRoute><ResumeManager /></ProtectedRoute>} />
-        <Route path="/analytics" element={<ProtectedRoute><CareerAnalytics /></ProtectedRoute>} />
-        <Route path="/github" element={<ProtectedRoute><GithubActivity /></ProtectedRoute>} />
-        <Route path="/settings" element={<ProtectedRoute><ProfileSettings /></ProtectedRoute>} />
+        <Route path="/analytics" element={<ProtectedRoute><SharedCareerLayout><CareerAnalytics /></SharedCareerLayout></ProtectedRoute>} />
+        <Route path="/github" element={<ProtectedRoute><SharedCareerLayout><GithubActivity /></SharedCareerLayout></ProtectedRoute>} />
+        <Route path="/settings" element={<ProtectedRoute><SharedCareerLayout><ProfileSettings /></SharedCareerLayout></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Navigate to="/" replace />} />
