@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import "../styles/resumeManager.css";
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
 import {
 getResumes,
 getResumeStats,
@@ -263,11 +261,8 @@ return matchesSearch && matchesStatus;
 
 });
 
-return ( <div className="app-shell">
-  <Sidebar />
-  <main className="main-area">
-    <Topbar />
-    <div className="resume-manager-page"> <div className="resume-manager-header"> <div> <p className="resume-eyebrow">Career Documents</p>
+return (
+  <div className="resume-manager-page"> <div className="resume-manager-header"> <div> <p className="resume-eyebrow">Career Documents</p>
 
 
       <h1>Resume Manager</h1>
@@ -693,8 +688,6 @@ return ( <div className="app-shell">
       <h2>Loading resumes...</h2>
     </div>
   )}
-</div>
-  </main>
 </div>
 
 );
