@@ -73,6 +73,7 @@ async function startServer() {
       Boolean(process.env.JWT_SECRET)
     );
     console.log("CLIENT_URL:", CLIENT_URL);
+    console.log("GOOGLE_CLIENT_ID present:", Boolean(process.env.GOOGLE_CLIENT_ID));
 
     await connectDatabase();
 
