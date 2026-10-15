@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../styles/profileSettings.css";
-import DashboardBackButton from "../components/DashboardBackButton";
 import {
 getProfile,
 updateProfile,
@@ -199,12 +198,12 @@ try {
 
 if (loading) {
 return ( <div className="profile-settings-page">
-  <DashboardBackButton /> <div className="profile-empty-state"> <h2>Loading profile...</h2> </div> </div>
+<div className="profile-empty-state"> <h2>Loading profile...</h2> </div> </div>
 );
 }
 
 return ( <div className="profile-settings-page">
-  <DashboardBackButton /> <div className="profile-settings-header"> <div> <p className="profile-eyebrow">
+<div className="profile-settings-header"> <div> <p className="profile-eyebrow">
 Account & Career </p>
 
 
