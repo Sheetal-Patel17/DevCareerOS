@@ -459,12 +459,11 @@ function Interviews() {
           {filteredInterviews.length > 0 ? (
             <div className="interviews-list">
               {filteredInterviews.map((interview) => (
-                <div className="interview-card" key={interview._id}>
-                  <div>
+                <article className="interview-card" key={interview._id}>
+                  <div className="interview-card-main">
+                    <span className="interview-company-label">Company</span>
                     <h2>{interview.company}</h2>
-
                     <p>{interview.role}</p>
-
                     <small>
                       {new Date(
                         interview.interviewDate
@@ -473,11 +472,9 @@ function Interviews() {
                   </div>
 
                   <div className="interview-card-meta">
-                    <strong>{interview.round}</strong>
-
-                    <span>{interview.type}</span>
-
-                    <span>{interview.status}</span>
+                    <strong className="interview-round-label">{interview.round}</strong>
+                    <span className="interview-type-badge">{interview.type}</span>
+                    <span className={`interview-status-badge status-${String(interview.status || "scheduled").toLowerCase().replace(/\s+/g, "-")}`}>{interview.status}</span>
 
                     <div className="interview-actions">
                       <button
@@ -497,7 +494,7 @@ function Interviews() {
                       </button>
                     </div>
                   </div>
-                </div>
+                </article>
               ))}
             </div>
           ) : (
