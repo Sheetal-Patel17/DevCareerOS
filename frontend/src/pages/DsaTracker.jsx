@@ -7,7 +7,6 @@ import {
   updateDsaProblem,
 } from "../services/dsaService";
 import "../styles/dsaTracker.css";
-import DashboardBackButton from "../components/DashboardBackButton";
 
 const initialForm = {
   title: "",
@@ -222,7 +221,7 @@ function DsaTracker() {
   if (loading) {
     return (
       <main className="dsa-page">
-        <DashboardBackButton />
+
         <div className="dsa-header">
           <p className="dsa-eyebrow">Practice Tracker</p>
           <h1>DSA Progress</h1>
@@ -240,7 +239,7 @@ function DsaTracker() {
 
   return (
     <main className="dsa-page">
-        <DashboardBackButton />
+
       <div className="dsa-header">
         <div>
           <p className="dsa-eyebrow">Practice Tracker</p>
