@@ -49,7 +49,7 @@ function enforceUserRateLimit(req, res, next) {
 }
 
 router.post("/chat", enforceUserRateLimit, async (req, res) => {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
     return res.status(503).json({
@@ -115,7 +115,7 @@ router.post("/chat", enforceUserRateLimit, async (req, res) => {
   }
 
   try {
-    const instructions = [
+    const systemInstruction = [
       "You are Career AI Assistant, a helpful and encouraging assistant inside DevCareerOS.",
       "Help with resumes, professional bios, LinkedIn summaries, job applications, interview practice, career planning, skills, projects, and explaining how to use the app.",
       "Give practical, clearly formatted answers. For writing requests, provide a polished draft the user can copy and edit.",
@@ -124,34 +124,45 @@ router.post("/chat", enforceUserRateLimit, async (req, res) => {
       "The user's current DevCareerOS page is: " + pageContext + ". Use this context only when it helps answer the question.",
     ].join("\n");
 
-    const apiResponse = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || "gpt-5-mini",
-        instructions,
-        input: messages,
-        max_output_tokens: 700,
-      }),
-      signal: AbortSignal.timeout(45000),
-    });
+    const contents = messages.map((message) => ({
+      role: message.role === "assistant" ? "model" : "user",
+      parts: [{ text: message.content }],
+    }));
+
+    const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+    const apiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+        },
+        body: JSON.stringify({
+          system_instruction: {
+            parts: [{ text: systemInstruction }],
+          },
+          contents,
+          generationConfig: {
+            maxOutputTokens: 700,
+          },
+        }),
+        signal: AbortSignal.timeout(45000),
+      }
+    );
 
     const response = await apiResponse.json().catch(() => ({}));
 
     if (!apiResponse.ok) {
-      const apiError = new Error(response.error?.message || "OpenAI request failed");
+      const apiError = new Error(response.error?.message || "Gemini request failed");
       apiError.status = apiResponse.status;
-      apiError.code = response.error?.code;
+      apiError.code = response.error?.status || response.error?.code;
       throw apiError;
     }
 
-    const reply = (response.output || [])
-      .flatMap((item) => Array.isArray(item.content) ? item.content : [])
-      .filter((item) => item.type === "output_text" && typeof item.text === "string")
-      .map((item) => item.text)
+    const reply = (response.candidates?.[0]?.content?.parts || [])
+      .filter((part) => typeof part.text === "string")
+      .map((part) => part.text)
       .join("\n")
       .trim();
 
@@ -173,13 +184,13 @@ router.post("/chat", enforceUserRateLimit, async (req, res) => {
     if (error?.status === 429) {
       return res.status(429).json({
         success: false,
-        message: "The AI service is busy or its usage limit has been reached. Please try again later.",
+        message: "The free AI usage limit may have been reached. Please wait and try again later.",
       });
     }
 
     return res.status(502).json({
       success: false,
-      message: "The AI assistant couldn't respond right now. Please try again shortly.",
+      message: "The AI assistant couldn't respond right now. Please check the backend logs and try again.",
     });
   }
 });
