@@ -1,912 +1,305 @@
-\# DevCareerOS
-
-
+# DevCareerOS
 
 <p align="center">
-
-&#x20; <strong>A full-stack career management platform for students and developers.</strong>
-
+  <strong>Your career, organized in one workspace.</strong><br />
+  A full-stack career management platform for students and early-career developers.
 </p>
-
-
 
 <p align="center">
-
-&#x20; Track applications, skills, projects, DSA practice, interviews, goals, resumes, career analytics, and GitHub activity from one workspace.
-
+  <a href="https://devcareeros.netlify.app"><strong>Live Demo</strong></a>
+  ·
+  <a href="https://devcareeros-backend.onrender.com/api/health">API Health</a>
+  ·
+  <a href="https://github.com/Sheetal-Patel17/DevCareerOS">Source Code</a>
 </p>
-
-
 
 <p align="center">
-
-&#x20; <a href="https://devcareeros.netlify.app">Live Demo</a>
-
-&#x20; ·
-
-&#x20; <a href="https://github.com/Sheetal-Patel17/DevCareerOS">GitHub Repository</a>
-
-&#x20; ·
-
-&#x20; <a href="https://devcareeros-backend.onrender.com/api/health">Backend Health</a>
-
+  <img src="https://img.shields.io/github/actions/workflow/status/Sheetal-Patel17/DevCareerOS/ci.yml?branch=main&label=CI" alt="GitHub Actions CI" />
+  <img src="https://img.shields.io/github/languages/top/Sheetal-Patel17/DevCareerOS" alt="Top language" />
+  <img src="https://img.shields.io/github/repo-size/Sheetal-Patel17/DevCareerOS" alt="Repository size" />
+  <img src="https://img.shields.io/github/license/Sheetal-Patel17/DevCareerOS" alt="License" />
 </p>
 
-
-
-<p align="center">
-
-&#x20; <img src="https://img.shields.io/github/actions/workflow/status/Sheetal-Patel17/DevCareerOS/ci.yml?branch=main\&label=CI" alt="CI Status" />
-
-&#x20; <img src="https://img.shields.io/github/languages/top/Sheetal-Patel17/DevCareerOS" alt="Top Language" />
-
-&#x20; <img src="https://img.shields.io/github/repo-size/Sheetal-Patel17/DevCareerOS" alt="Repository Size" />
-
-&#x20; <img src="https://img.shields.io/github/license/Sheetal-Patel17/DevCareerOS" alt="License" />
-
-</p>
-
-
-
-\---
-
-
-
-\## Overview
-
-
-
-DevCareerOS is a full-stack web application designed to help students and developers manage their career preparation in one centralized platform.
-
-
-
-Instead of using separate tools for job applications, coding practice, interviews, resumes, and career goals, DevCareerOS brings these workflows together with a single authenticated dashboard.
-
-
-
-\---
-
-
-
-\## Live Application
-
-
-
-\*\*Frontend:\*\*
-
-https://devcareeros.netlify.app
-
-
-
-\*\*Backend Health:\*\*
-
-https://devcareeros-backend.onrender.com/api/health
-
-
-
-\*\*Repository:\*\*
-
-https://github.com/Sheetal-Patel17/DevCareerOS
-
-
-
-\---
-
-
-
-\## Features
-
-
-
-| Module             | What it does                                                                           |
-
-| ------------------ | -------------------------------------------------------------------------------------- |
-
-| Authentication     | Secure registration and login using JWT                                                |
-
-| Job Applications   | Track companies, roles, application status, and progress                               |
-
-| Skills Tracker     | Organize and monitor technical skill development                                       |
-
-| Project Manager    | Maintain projects and monitor project progress                                         |
-
-| DSA Tracker        | Create, edit, delete, search, filter, and track coding problems                        |
-
-| Interview Tracker  | Manage interview schedules, rounds, preparation, and outcomes                          |
-
-| Career Goals       | Track goals, priorities, deadlines, milestones, and progress                           |
-
-| Resume Manager     | Manage multiple resume versions and their readiness status                             |
-
-| Profile \& Settings | Manage professional information, career preferences, and profile links                 |
-
-| Career Analytics   | View consolidated progress across career modules                                       |
-
-| GitHub Activity    | View public GitHub profile, repositories, stars, forks, languages, and recent activity |
-
-
-
-\---
-
-
-
-\## Tech Stack
-
-
-
-\### Frontend
-
-
-
-\* React 19
-
-\* Vite
-
-\* React Router
-
-\* CSS
-
-\* Lucide React
-
-
-
-\### Backend
-
-
-
-\* Node.js
-
-\* Express.js
-
-\* REST API
-
-\* JWT
-
-\* bcryptjs
-
-\* Mongoose
-
-
-
-\### Database
-
-
-
-\* MongoDB
-
-\* MongoDB Atlas
-
-
-
-\### Integrations
-
-
-
-\* GitHub REST API
-
-
-
-\### Development \& Deployment
-
-
-
-\* Git
-
-\* GitHub
-
-\* GitHub Actions
-
-\* Render
-
-\* Netlify
-
-\* Postman
-
-
-
-\---
-
-
-
-\## Architecture
-
-
+---
+
+## Overview
+
+**DevCareerOS** brings everyday career-preparation workflows into one authenticated application. Instead of managing job applications, coding practice, interviews, projects, and goals across separate tools, users can organize their progress from a shared dashboard.
+
+The application includes a **Gemini-powered Career AI assistant** for beginner-friendly career guidance, alongside tools for tracking professional development.
+
+## Live Links
+
+| Resource | Link |
+| --- | --- |
+| Live application | [devcareeros.netlify.app](https://devcareeros.netlify.app) |
+| Backend health check | [API health endpoint](https://devcareeros-backend.onrender.com/api/health) |
+| GitHub repository | [Sheetal-Patel17/DevCareerOS](https://github.com/Sheetal-Patel17/DevCareerOS) |
+
+> **Hosting note:** The frontend is hosted on Netlify and the API is hosted on Render. Render's free instance may sleep when inactive, so the first request after a quiet period can take longer.
+
+## Features
+
+- **Authentication:** Register and sign in with JWT-based authentication, password hashing, protected routes, and Google OAuth.
+- **Career dashboard:** Access career-planning tools from a central workspace.
+- **Job applications:** Track applications, companies, roles, statuses, and progress.
+- **Skills and learning:** Keep track of technical skills and learning progress.
+- **Project manager:** Organize projects and monitor their status.
+- **DSA tracker:** Manage coding-practice problems and track progress with search and filtering.
+- **Interview tracker:** Organize interview rounds, preparation, schedules, and outcomes.
+- **Career goals:** Set goals, deadlines, priorities, milestones, and progress.
+- **Resume manager:** Keep track of resume versions and readiness.
+- **Career analytics:** Review consolidated progress and status summaries across career modules.
+- **GitHub activity:** Explore public GitHub profile information, repositories, stars, forks, languages, and recent public activity.
+- **Career AI assistant:** Ask for help with career planning, resume writing, interview preparation, skills, projects, and app usage. The assistant uses Gemini through the backend; the API key stays server-side.
+- **Profile and settings:** Maintain professional details and career preferences.
+- **Responsive interface:** Navigate the workspace on desktop and mobile screen sizes.
+
+## Tech Stack
+
+| Area | Technologies |
+| --- | --- |
+| Frontend | React 19, Vite, React Router 7, CSS, Lucide React |
+| Backend | Node.js, Express 5, REST API |
+| Database | MongoDB Atlas, Mongoose |
+| Authentication | JSON Web Tokens (JWT), bcryptjs, Google OAuth |
+| AI assistant | Google Gemini API |
+| External integration | GitHub REST API |
+| Quality and deployment | Git, GitHub Actions, Netlify, Render |
+
+## Architecture
 
 ```mermaid
-
 flowchart LR
-
-&#x20;   U\[User] --> FE\[React + Vite Frontend]
-
-&#x20;   FE --> API\[Express REST API]
-
-&#x20;   API --> AUTH\[JWT Authentication]
-
-&#x20;   API --> DB\[(MongoDB Atlas)]
-
-&#x20;   API --> GH\[GitHub REST API]
-
-&#x20;   
-
-&#x20;   FE --> MOD1\[Applications]
-
-&#x20;   FE --> MOD2\[Skills]
-
-&#x20;   FE --> MOD3\[Projects]
-
-&#x20;   FE --> MOD4\[DSA]
-
-&#x20;   FE --> MOD5\[Interviews]
-
-&#x20;   FE --> MOD6\[Goals]
-
-&#x20;   FE --> MOD7\[Resumes]
-
-&#x20;   FE --> MOD8\[Analytics]
-
-&#x20;   FE --> MOD9\[Profile \& Settings]
-
-&#x20;   FE --> MOD10\[GitHub Activity]
-
-&#x20;   
-
-&#x20;   API --> MOD1
-
-&#x20;   API --> MOD2
-
-&#x20;   API --> MOD3
-
-&#x20;   API --> MOD4
-
-&#x20;   API --> MOD5
-
-&#x20;   API --> MOD6
-
-&#x20;   API --> MOD7
-
-&#x20;   API --> MOD8
-
-&#x20;   API --> MOD9
-
-&#x20;   API --> MOD10
-
-
-
-&#x20;   FE --> NET\[Netlify]
-
-&#x20;   API --> RENDER\[Render]
-
+    U[User] --> FE[React + Vite frontend]
+    FE --> API[Express REST API]
+    API --> AUTH[JWT authentication]
+    API --> DB[(MongoDB Atlas)]
+    API --> GH[GitHub REST API]
+    API --> AI[Gemini API]
+    FE --> NET[Netlify]
+    API --> RENDER[Render]
 ```
 
-
-
-\---
-
-
-
-\## Project Structure
-
-
+## Project Structure
 
 ```text
-
 DevCareerOS/
-
 ├── backend/
-
 │   ├── src/
-
 │   │   ├── config/
-
 │   │   ├── controllers/
-
 │   │   ├── middleware/
-
 │   │   ├── models/
-
 │   │   ├── routes/
-
 │   │   └── server.js
-
+│   ├── .env.example
 │   └── package.json
-
-│
-
 ├── frontend/
-
 │   ├── public/
-
 │   ├── src/
-
 │   │   ├── components/
-
 │   │   ├── pages/
-
 │   │   ├── services/
-
 │   │   ├── styles/
-
 │   │   ├── App.jsx
-
 │   │   └── main.jsx
-
+│   ├── .env.example
 │   └── package.json
-
-│
-
 ├── docs/
-
-├── .github/
-
-│   └── workflows/
-
-│       └── ci.yml
-
-│
-
-├── .env.example
-
-├── .gitignore
-
-├── LICENSE
-
+│   ├── screenshots/
+│   ├── architecture.md
+│   ├── GOOGLE_OAUTH_SETUP.md
+│   └── roadmap.md
+├── .github/workflows/ci.yml
 ├── netlify.toml
-
 └── README.md
-
 ```
 
+## Run Locally
 
+### Prerequisites
 
-\---
+- Node.js (use a current LTS release)
+- npm
+- Git
+- A MongoDB Atlas database (or a MongoDB instance you manage)
+- A Google OAuth web client ID for Google sign-in
+- A Gemini API key if you want to use Career AI locally
 
-
-
-\## Authentication \& Security
-
-
-
-DevCareerOS uses:
-
-
-
-\* JWT-based authentication
-
-\* Password hashing with bcryptjs
-
-\* Protected backend routes
-
-\* Authorization middleware
-
-\* Environment variables for secrets
-
-\* `.gitignore` protection for local environment files
-
-\* Separate production frontend and backend environments
-
-
-
-Sensitive credentials such as MongoDB connection strings and JWT secrets are not stored in the repository.
-
-
-
-\---
-
-
-
-\## API Modules
-
-
-
-The backend is organized around REST endpoints for:
-
-
-
-```text
-
-/api/auth
-
-/api/users
-
-/api/dsa
-
-/api/interviews
-
-/api/goals
-
-/api/resumes
-
-/api/profile
-
-/api/analytics
-
-/api/github-activity
-
-```
-
-
-
-Protected endpoints require a valid JWT.
-
-
-
-\---
-
-
-
-\## Career Analytics
-
-
-
-The Career Analytics module consolidates data from:
-
-
-
-\* DSA practice
-
-\* Career goals
-
-\* Interviews
-
-\* Resumes
-
-
-
-It provides summary metrics, progress percentages, status breakdowns, difficulty distribution, interview outcomes, and resume readiness.
-
-
-
-\---
-
-
-
-\## GitHub Activity
-
-
-
-The GitHub Activity module integrates public GitHub data to display:
-
-
-
-\* Public repositories
-
-\* Stars
-
-\* Forks
-
-\* Followers
-
-\* Programming language distribution
-
-\* Repository highlights
-
-\* Recent public activity
-
-
-
-The recent activity section is based on GitHub's public activity feed and should not be treated as an exact contribution graph.
-
-
-
-\---
-
-
-
-\## Local Development
-
-
-
-\### Prerequisites
-
-
-
-\* Node.js
-
-\* npm
-
-\* MongoDB Atlas account
-
-\* Git
-
-
-
-\### 1. Clone the repository
-
-
+### 1. Clone the repository
 
 ```bash
-
 git clone https://github.com/Sheetal-Patel17/DevCareerOS.git
-
 cd DevCareerOS
-
 ```
 
-
-
-\### 2. Backend setup
-
-
+### 2. Configure the backend
 
 ```bash
-
 cd backend
-
 npm install
-
 ```
 
-
-
-Create:
-
-
-
-```text
-
-backend/.env
-
-```
-
-
-
-Use the variables documented in:
-
-
-
-```text
-
-.env.example
-
-```
-
-
-
-Start the backend:
-
-
-
-```bash
-
-npm start
-
-```
-
-
-
-Development mode:
-
-
-
-```bash
-
-npm run dev
-
-```
-
-
-
-Backend:
-
-
-
-```text
-
-http://localhost:5000
-
-```
-
-
-
-Health check:
-
-
-
-```text
-
-http://localhost:5000/api/health
-
-```
-
-
-
-\### 3. Frontend setup
-
-
-
-Open another terminal:
-
-
-
-```bash
-
-cd frontend
-
-npm install
-
-npm run dev
-
-```
-
-
-
-Frontend:
-
-
-
-```text
-
-http://localhost:5173
-
-```
-
-
-
-\---
-
-
-
-\## Environment Variables
-
-
-
-Example variables:
-
-
+Create a file named `.env` inside the `backend/` folder. Use `backend/.env.example` as your template:
 
 ```env
-
-MONGODB\_URI=your\_mongodb\_atlas\_connection\_string
-
-JWT\_SECRET=your\_jwt\_secret
-
-CLIENT\_URL=http://localhost:5173
-
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=replace_with_a_long_random_secret
+CLIENT_URL=http://localhost:5173
+GOOGLE_CLIENT_ID=your_google_oauth_web_client_id.apps.googleusercontent.com
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-3.8-flash
 ```
 
+Replace the example values with your own credentials. Never commit your real `.env` file or share API keys. The Gemini key belongs only in the backend environment, never in frontend variables.
 
-
-For production, configure these values through the hosting provider's environment-variable settings.
-
-
-
-Never commit real secrets.
-
-
-
-\---
-
-
-
-\## Production Deployment
-
-
-
-\### Frontend
-
-
-
-Deployed with Netlify.
-
-
-
-```text
-
-https://devcareeros.netlify.app
-
-```
-
-
-
-Build command:
-
-
+Start the API:
 
 ```bash
-
-npm run build
-
+npm run dev
 ```
 
+The backend runs at `http://localhost:5000`. Check its health endpoint at [http://localhost:5000/api/health](http://localhost:5000/api/health).
 
+### 3. Configure the frontend
 
-\### Backend
-
-
-
-Deployed with Render.
-
-
-
-```text
-
-https://devcareeros-backend.onrender.com
-
-```
-
-
-
-Start command:
-
-
+Open a second terminal at the repository root:
 
 ```bash
-
-npm start
-
+cd frontend
+npm install
 ```
 
+Create `frontend/.env` using `frontend/.env.example` as a guide:
 
-
-\### Database
-
-
-
-MongoDB Atlas is used as the production database.
-
-
-
-\---
-
-
-
-\## Continuous Integration
-
-
-
-GitHub Actions runs automatically on pushes to `main` and pull requests targeting `main`.
-
-
-
-The CI workflow validates:
-
-
-
-\* Backend JavaScript syntax
-
-\* Frontend linting
-
-\* Frontend production build
-
-
-
-Workflow:
-
-
-
-```text
-
-.github/workflows/ci.yml
-
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+VITE_GOOGLE_CLIENT_ID=your_google_oauth_web_client_id.apps.googleusercontent.com
 ```
 
+Run the frontend:
 
-
-\---
-
-
-
-\## Testing \& Validation
-
-
-
-The application has been verified locally and in production for:
-
-
-
-\* Registration and login
-
-\* Protected routes
-
-\* DSA CRUD operations
-
-\* Interview management
-
-\* Goal management
-
-\* Resume management
-
-\* Profile settings
-
-\* Career Analytics
-
-\* GitHub Activity
-
-\* React Router direct routes
-
-\* Production frontend build
-
-\* Backend health endpoint
-
-\* GitHub Actions CI
-
-
-
-\---
-
-
-
-\## Screenshots
-
-
-
-Screenshots will be added to:
-
-
-
-```text
-
-docs/screenshots/
-
+```bash
+npm run dev
 ```
+
+Vite prints the local URL in the terminal (normally [http://localhost:5173](http://localhost:5173)).
+
+### 4. Google OAuth setup
+
+The Google OAuth client ID must be configured for both the backend and frontend. For Google Cloud Console setup and authorized origins, see [Google OAuth Setup](docs/GOOGLE_OAUTH_SETUP.md).
+
+### 5. Career AI setup
+
+Create a Gemini API key in Google AI Studio and set `GEMINI_API_KEY` in the **backend environment only**. Set `GEMINI_MODEL` to a model available to your Gemini API project. The example above uses `gemini-3.8-flash`; model access and free-tier quotas may vary by project and can change.
+
+## Environment Variables
+
+### Backend (`backend/.env`)
+
+| Variable | Purpose |
+| --- | --- |
+| `PORT` | Local API port (defaults to 5000) |
+| `MONGODB_URI` | MongoDB connection string |
+| `JWT_SECRET` | Secret used to sign authentication tokens |
+| `CLIENT_URL` | Frontend origin allowed by CORS |
+| `GOOGLE_CLIENT_ID` | Google OAuth web client ID |
+| `GEMINI_API_KEY` | Server-side Gemini API key for Career AI |
+| `GEMINI_MODEL` | Gemini model name used by the assistant |
+
+### Frontend (`frontend/.env`)
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_API_BASE_URL` | Base URL for the backend API |
+| `VITE_GOOGLE_CLIENT_ID` | Google OAuth web client ID used by the frontend |
+
+**Security:** Vite exposes variables prefixed with `VITE_` to the browser. Never put database credentials, JWT secrets, or AI API keys in frontend environment variables.
+
+## API Overview
+
+The backend exposes REST endpoints grouped by feature:
+
+| Prefix | Purpose |
+| --- | --- |
+| `/api/auth` | Registration, login, and authentication |
+| `/api/users` | User-related operations |
+| `/api/applications` | Job application tracking |
+| `/api/skills` | Skills tracking |
+| `/api/projects` | Project management |
+| `/api/dsa` | Coding practice |
+| `/api/interviews` | Interview tracking |
+| `/api/goals` | Career goals |
+| `/api/resumes` | Resume management |
+| `/api/profile` | Profile and preferences |
+| `/api/analytics` | Career progress summaries |
+| `/api/github-activity` | Public GitHub activity |
+| `/api/assistant` | Gemini-powered Career AI |
+
+Most user-specific endpoints require authentication.
 
 ## Screenshots
 
+The screenshots below show key areas of the application. Images are stored in [`docs/screenshots/`](docs/screenshots/).
+
 ### Dashboard
 
-![DevCareerOS Dashboard](docs/screenshots/dashboard.png)
+![DevCareerOS dashboard](docs/screenshots/dashboard.png)
 
 ### DSA Tracker
 
-![DSA Progress Tracker](docs/screenshots/dsa.png)
+![DSA progress tracker](docs/screenshots/dsa.png)
 
 ### Interview Tracker
 
-![Interview Tracker](docs/screenshots/interviews.png)
+![Interview tracker](docs/screenshots/interviews.png)
 
 ### Career Goals
 
-![Career Goals](docs/screenshots/goals.png)
+![Career goals](docs/screenshots/goals.png)
 
-### Resume & Career Analytics
+### Career Analytics
 
-![Career Analytics Dashboard](docs/screenshots/analytics.png)
+![Career analytics dashboard](docs/screenshots/analytics.png)
 
 ### GitHub Activity
 
-![GitHub Activity Dashboard](docs/screenshots/github.png)
+![GitHub activity dashboard](docs/screenshots/github.png)
 
-### Profile & Settings
+### Profile and Settings
 
-![Profile and Settings](docs/screenshots/settings.png)
+![Profile and settings](docs/screenshots/settings.png)
 
+## Continuous Integration
 
+GitHub Actions runs the workflow at [`.github/workflows/ci.yml`](.github/workflows/ci.yml) for pushes to `main` and pull requests targeting `main`. The workflow checks backend JavaScript syntax, frontend linting, and the frontend production build.
 
-\## Developer
+## Deployment
 
+- **Frontend:** Netlify — [https://devcareeros.netlify.app](https://devcareeros.netlify.app)
+- **Backend:** Render — [https://devcareeros-backend.onrender.com](https://devcareeros-backend.onrender.com)
+- **Database:** MongoDB Atlas
 
+Set production environment variables in the respective hosting dashboards. Do not store production credentials in the repository. For the backend, configure `MONGODB_URI`, `JWT_SECRET`, `CLIENT_URL`, `GOOGLE_CLIENT_ID`, `GEMINI_API_KEY`, and `GEMINI_MODEL`. For the frontend, configure the production API base URL and Google client ID using the names expected by the Vite app.
 
-\*\*Sheetal Patel\*\*
+## Security Notes
 
+- Keep all real credentials in local environment files or hosting-provider secret settings.
+- Never expose `GEMINI_API_KEY`, `JWT_SECRET`, or `MONGODB_URI` to the frontend.
+- If a secret is accidentally committed or shared, rotate it immediately.
+- The Career AI assistant is a productivity aid; review generated career advice before relying on it.
+- Public GitHub activity reflects the public data available through GitHub's API and is not a guarantee of a complete contribution graph.
 
+## Developer
 
-GitHub:
+**Sheetal Patel**
 
-https://github.com/Sheetal-Patel17
+- GitHub: [Sheetal-Patel17](https://github.com/Sheetal-Patel17)
+- LinkedIn: [sheetal-patel17](https://www.linkedin.com/in/sheetal-patel17/)
+- Portfolio: [sheetal-patel-portfolio.netlify.app](https://sheetal-patel-portfolio.netlify.app/)
 
+## License
 
-
-LinkedIn:
-
-https://www.linkedin.com/in/sheetal-patel17/
-
-
-
-Portfolio:
-
-https://sheetal-patel-portfolio.netlify.app/
-
-
-
-\---
-
-
-
-\## License
-
-
-
-This project is licensed under the MIT License.
-
-
-
+This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for details.
