@@ -49,7 +49,7 @@ function enforceUserRateLimit(req, res, next) {
 }
 
 router.post("/chat", enforceUserRateLimit, async (req, res) => {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
     return res.status(503).json({
@@ -99,14 +99,13 @@ router.post("/chat", enforceUserRateLimit, async (req, res) => {
       message.content.trim().length > 0
     )
     .map((message) => ({
-      role: message.role,
-      content: message.content.trim().slice(0, MAX_MESSAGE_LENGTH),
+      role: message.role === "assistant" ? "model" : "user",
+      parts: [{ text: message.content.trim().slice(0, MAX_MESSAGE_LENGTH) }],
     }));
 
   if (
     messages.length === 0 ||
-    messages[messages.length - 1].role !== "user" ||
-    messages[messages.length - 1].content.length > MAX_MESSAGE_LENGTH
+    messages[messages.length - 1].role !== "user"
   ) {
     return res.status(400).json({
       success: false,
@@ -124,34 +123,36 @@ router.post("/chat", enforceUserRateLimit, async (req, res) => {
       "The user's current DevCareerOS page is: " + pageContext + ". Use this context only when it helps answer the question.",
     ].join("\n");
 
-    const apiResponse = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || "gpt-5-mini",
-        instructions,
-        input: messages,
-        max_output_tokens: 700,
-      }),
-      signal: AbortSignal.timeout(45000),
-    });
+    const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+    const apiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
+      {
+        method: "POST",
+        headers: {
+          "x-goog-api-key": apiKey,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: instructions }] },
+          contents: messages,
+          generationConfig: { maxOutputTokens: 700 },
+        }),
+        signal: AbortSignal.timeout(45000),
+      }
+    );
 
     const response = await apiResponse.json().catch(() => ({}));
 
     if (!apiResponse.ok) {
-      const apiError = new Error(response.error?.message || "OpenAI request failed");
+      const apiError = new Error(response.error?.message || "Gemini request failed");
       apiError.status = apiResponse.status;
-      apiError.code = response.error?.code;
+      apiError.code = response.error?.status || response.error?.code;
       throw apiError;
     }
 
-    const reply = (response.output || [])
-      .flatMap((item) => Array.isArray(item.content) ? item.content : [])
-      .filter((item) => item.type === "output_text" && typeof item.text === "string")
-      .map((item) => item.text)
+    const reply = (response.candidates?.[0]?.content?.parts || [])
+      .filter((part) => typeof part.text === "string")
+      .map((part) => part.text)
       .join("\n")
       .trim();
 
@@ -164,16 +165,31 @@ router.post("/chat", enforceUserRateLimit, async (req, res) => {
 
     return res.status(200).json({ success: true, reply });
   } catch (error) {
+    // Keep provider details in server logs for troubleshooting; never log API keys.
     console.error("Career assistant request failed:", {
       status: error?.status,
       code: error?.code,
       message: error?.message,
     });
 
-    if (error?.status === 429) {
+    if (error?.status === 429 || error?.code === "RESOURCE_EXHAUSTED") {
       return res.status(429).json({
         success: false,
-        message: "The AI service is busy or its usage limit has been reached. Please try again later.",
+        message: "The free AI service has reached its current usage limit. Please wait and try again later.",
+      });
+    }
+
+    if (error?.status === 401 || error?.code === "UNAUTHENTICATED") {
+      return res.status(502).json({
+        success: false,
+        message: "The AI service key was rejected. Please check the GEMINI_API_KEY setting in Render.",
+      });
+    }
+
+    if (error?.status === 403) {
+      return res.status(502).json({
+        success: false,
+        message: "The AI service denied this request. Check that your Gemini API key and free-tier access are enabled.",
       });
     }
 
