@@ -302,4 +302,4 @@ Set production environment variables in the respective hosting dashboards. Do no
 
 ## License
 
-This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for details.
+This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for details..
